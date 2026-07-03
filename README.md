@@ -599,16 +599,6 @@ hover:translate-y-[-2px] hover:shadow-lg
 
 ###
 
----
-
-- Use TypeScript for all new files
-- Follow existing component patterns
-- Use `cn()` utility for class merging
-- Keep components in `components/` directory
-- Use Lucide icons consistently
-
----
-
 ## ❓ FAQ
 
 ### Q: Why is the dev server slow to start?
