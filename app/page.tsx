@@ -16,6 +16,18 @@ import {
   Pause,
   Sparkles,
   X,
+  Bell,
+  Globe,
+  Palette,
+  Clock3,
+  Eye,
+  EyeOff,
+  Monitor,
+  Moon,
+  Sun,
+  Volume2,
+  VolumeX,
+  Check,
 } from "lucide-react"
 
 export default function Home() {
