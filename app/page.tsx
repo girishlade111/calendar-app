@@ -1,3 +1,526 @@
+"use client"
+
+import { useState, useEffect, useRef, useMemo } from "react"
+import Image from "next/image"
+import {
+  ChevronLeft,
+  ChevronRight,
+  Plus,
+  Search,
+  Settings,
+  Menu,
+  Clock,
+  MapPin,
+  Users,
+  Calendar,
+  Pause,
+  Sparkles,
+  X,
+  Bell,
+  Globe,
+  Palette,
+  Clock3,
+  Eye,
+  EyeOff,
+  Monitor,
+  Moon,
+  Sun,
+  Volume2,
+  VolumeX,
+  Check,
+  User,
+  Mail,
+  Phone,
+  Shield,
+  Key,
+  LogOut,
+  Camera,
+  Edit3,
+  Save,
+  CreditCard,
+  HelpCircle,
+  MessageSquare,
+} from "lucide-react"
+
+export default function Home() {
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [showAIPopup, setShowAIPopup] = useState(false)
+  const [typedText, setTypedText] = useState("")
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [showSearchResults, setShowSearchResults] = useState(false)
+  const [selectedSearchIndex, setSelectedSearchIndex] = useState(-1)
+  const searchInputRef = useRef<HTMLInputElement>(null)
+  const searchResultsRef = useRef<HTMLDivElement>(null)
+
+  // Profile state
+  const [showProfile, setShowProfile] = useState(false)
+  const [profileTab, setProfileTab] = useState("account" as "account" | "security" | "preferences" | "billing")
+  const [profile, setProfile] = useState({
+    firstName: "Girish",
+    lastName: "Lade",
+    email: "girishlade111@gmail.com",
+    phone: "+91 98765 43210",
+    avatar: "",
+    bio: "Software Developer & Tech Enthusiast",
+    location: "Mumbai, India",
+    company: "Lovy-tech",
+    jobTitle: "Full Stack Developer",
+    website: "https://girishlade.com",
+    notifications: {
+      email: true,
+      push: true,
+      sms: false,
+    },
+    security: {
+      twoFactor: false,
+      lastPasswordChange: "2025-01-15",
+      loginSessions: 3,
+    },
+  })
+  const [isEditingProfile, setIsEditingProfile] = useState(false)
+  const [editedProfile, setEditedProfile] = useState(profile)
+  const profileRef = useRef<HTMLDivElement>(null)
+
+  // Settings state
+  const [showSettings, setShowSettings] = useState(false)
+  const [settings, setSettings] = useState({
+    timeFormat: "12h" as "12h" | "24h",
+    startOfWeek: "sunday" as "sunday" | "monday",
+    showWeekends: true,
+    showEndTimes: true,
+    eventDensity: "comfortable" as "compact" | "comfortable" | "spacious",
+    aiAssistant: true,
+    soundEnabled: true,
+    notifications: true,
+    workingHoursStart: 8,
+    workingHoursEnd: 17,
+    timezone: "America/New_York",
+    theme: "dark" as "light" | "dark" | "system",
+    showDeclinedEvents: false,
+    defaultView: "week" as "day" | "week" | "month",
+  })
+  const [settingsTab, setSettingsTab] = useState("general" as "general" | "appearance" | "calendar" | "notifications")
+  const settingsRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    setIsLoaded(true)
+
+    // Show AI popup after 3 seconds
+    const popupTimer = setTimeout(() => {
+      setShowAIPopup(true)
+    }, 3000)
+
+    return () => clearTimeout(popupTimer)
+  }, [])
+
+  useEffect(() => {
+    if (showAIPopup) {
+      const text =
+        "LLooks like you don't have that many meetings today. Shall I play some Hans Zimmer essentials to help you get into your Flow State?"
+      let i = 0
+      const typingInterval = setInterval(() => {
+        if (i < text.length) {
+          setTypedText((prev) => prev + text.charAt(i))
+          i++
+        } else {
+          clearInterval(typingInterval)
+        }
+      }, 50)
+
+      return () => clearInterval(typingInterval)
+    }
+  }, [showAIPopup])
+
+  const [currentView, setCurrentView] = useState("week")
+  const [currentMonth, setCurrentMonth] = useState("March 2025")
+  const [currentDate, setCurrentDate] = useState("March 5")
+  const [selectedEvent, setSelectedEvent] = useState(null)
+
+  // Add Event Modal State
+  const [showAddEvent, setShowAddEvent] = useState(false)
+  const [newEvent, setNewEvent] = useState({
+    title: "",
+    description: "",
+    location: "",
+    startTime: "09:00",
+    endTime: "10:00",
+    day: 1,
+    color: "bg-blue-500",
+    attendees: "",
+    organizer: "You",
+  })
+  const addEventRef = useRef<HTMLDivElement>(null)
+
+  const eventColors = [
+    { name: "Blue", value: "bg-blue-500" },
+    { name: "Green", value: "bg-green-500" },
+    { name: "Purple", value: "bg-purple-500" },
+    { name: "Yellow", value: "bg-yellow-500" },
+    { name: "Indigo", value: "bg-indigo-500" },
+    { name: "Pink", value: "bg-pink-500" },
+    { name: "Teal", value: "bg-teal-500" },
+    { name: "Cyan", value: "bg-cyan-500" },
+    { name: "Red", value: "bg-red-400" },
+    { name: "Orange", value: "bg-orange-400" },
+  ]
+
+  // Updated sample calendar events with all events before 4 PM
+  const [events, setEvents] = useState([
+    {
+      id: 1,
+      title: "Team Meeting",
+      startTime: "09:00",
+      endTime: "10:00",
+      color: "bg-blue-500",
+      day: 1,
+      description: "Weekly team sync-up",
+      location: "Conference Room A",
+      attendees: ["John Doe", "Jane Smith", "Bob Johnson"],
+      organizer: "Alice Brown",
+    },
+    {
+      id: 2,
+      title: "Lunch with Sarah",
+      startTime: "12:30",
+      endTime: "13:30",
+      color: "bg-green-500",
+      day: 1,
+      description: "Discuss project timeline",
+      location: "Cafe Nero",
+      attendees: ["Sarah Lee"],
+      organizer: "You",
+    },
+    {
+      id: 3,
+      title: "Project Review",
+      startTime: "14:00",
+      endTime: "15:30",
+      color: "bg-purple-500",
+      day: 3,
+      description: "Q2 project progress review",
+      location: "Meeting Room 3",
+      attendees: ["Team Alpha", "Stakeholders"],
+      organizer: "Project Manager",
+    },
+    {
+      id: 4,
+      title: "Client Call",
+      startTime: "10:00",
+      endTime: "11:00",
+      color: "bg-yellow-500",
+      day: 2,
+      description: "Quarterly review with major client",
+      location: "Zoom Meeting",
+      attendees: ["Client Team", "Sales Team"],
+      organizer: "Account Manager",
+    },
+    {
+      id: 5,
+      title: "Team Brainstorm",
+      startTime: "13:00",
+      endTime: "14:30",
+      color: "bg-indigo-500",
+      day: 4,
+      description: "Ideation session for new product features",
+      location: "Creative Space",
+      attendees: ["Product Team", "Design Team"],
+      organizer: "Product Owner",
+    },
+    {
+      id: 6,
+      title: "Product Demo",
+      startTime: "11:00",
+      endTime: "12:00",
+      color: "bg-pink-500",
+      day: 5,
+      description: "Showcase new features to stakeholders",
+      location: "Demo Room",
+      attendees: ["Stakeholders", "Dev Team"],
+      organizer: "Tech Lead",
+    },
+    {
+      id: 7,
+      title: "Marketing Meeting",
+      startTime: "13:00",
+      endTime: "14:00",
+      color: "bg-teal-500",
+      day: 6,
+      description: "Discuss Q3 marketing strategy",
+      location: "Marketing Office",
+      attendees: ["Marketing Team"],
+      organizer: "Marketing Director",
+    },
+    {
+      id: 8,
+      title: "Code Review",
+      startTime: "15:00",
+      endTime: "16:00",
+      color: "bg-cyan-500",
+      day: 7,
+      description: "Review pull requests for new feature",
+      location: "Dev Area",
+      attendees: ["Dev Team"],
+      organizer: "Senior Developer",
+    },
+    {
+      id: 9,
+      title: "Morning Standup",
+      startTime: "08:30",
+      endTime: "09:30",
+      color: "bg-blue-400",
+      day: 2,
+      description: "Daily team standup",
+      location: "Slack Huddle",
+      attendees: ["Development Team"],
+      organizer: "Scrum Master",
+    },
+    {
+      id: 10,
+      title: "Design Review",
+      startTime: "14:30",
+      endTime: "15:45",
+      color: "bg-purple-400",
+      day: 5,
+      description: "Review new UI designs",
+      location: "Design Lab",
+      attendees: ["UX Team", "Product Manager"],
+      organizer: "Lead Designer",
+    },
+    {
+      id: 11,
+      title: "Investor Meeting",
+      startTime: "10:30",
+      endTime: "12:00",
+      color: "bg-red-400",
+      day: 7,
+      description: "Quarterly investor update",
+      location: "Board Room",
+      attendees: ["Executive Team", "Investors"],
+      organizer: "CEO",
+    },
+    {
+      id: 12,
+      title: "Team Training",
+      startTime: "09:30",
+      endTime: "11:30",
+      color: "bg-green-400",
+      day: 4,
+      description: "New tool onboarding session",
+      location: "Training Room",
+      attendees: ["All Departments"],
+      organizer: "HR",
+    },
+    {
+      id: 13,
+      title: "Budget Review",
+      startTime: "13:30",
+      endTime: "15:00",
+      color: "bg-yellow-400",
+      day: 3,
+      description: "Quarterly budget analysis",
+      location: "Finance Office",
+      attendees: ["Finance Team", "Department Heads"],
+      organizer: "CFO",
+    },
+    {
+      id: 14,
+      title: "Client Presentation",
+      startTime: "11:00",
+      endTime: "12:30",
+      color: "bg-orange-400",
+      day: 6,
+      description: "Present new project proposal",
+      location: "Client Office",
+      attendees: ["Sales Team", "Client Representatives"],
+      organizer: "Account Executive",
+    },
+    {
+      id: 15,
+      title: "Product Planning",
+      startTime: "14:00",
+      endTime: "15:30",
+      color: "bg-pink-400",
+      day: 1,
+      description: "Roadmap discussion for Q3",
+      location: "Strategy Room",
+      attendees: ["Product Team", "Engineering Leads"],
+      organizer: "Product Manager",
+    },
+  ])
+
+  const handleEventClick = (event) => {
+    setSelectedEvent(event)
+  }
+
+  const handleAddEvent = () => {
+    if (!newEvent.title.trim()) return
+    const event = {
+      ...newEvent,
+      id: events.length + 1,
+      attendees: newEvent.attendees ? newEvent.attendees.split(",").map((a) => a.trim()) : [],
+    }
+    setEvents([...events, event])
+    setNewEvent({
+      title: "",
+      description: "",
+      location: "",
+      startTime: "09:00",
+      endTime: "10:00",
+      day: 1,
+      color: "bg-blue-500",
+      attendees: "",
+      organizer: "You",
+    })
+    setShowAddEvent(false)
+  }
+
+  const resetNewEvent = () => {
+    setNewEvent({
+      title: "",
+      description: "",
+      location: "",
+      startTime: "09:00",
+      endTime: "10:00",
+      day: 1,
+      color: "bg-blue-500",
+      attendees: "",
+      organizer: "You",
+    })
+  }
+  const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+  const weekDates = [3, 4, 5, 6, 7, 8, 9]
+  const timeSlots = Array.from({ length: 9 }, (_, i) => i + 8) // 8 AM to 4 PM
+
+  // Search functionality
+  const searchResults = useMemo(() => {
+    if (!searchQuery.trim()) return []
+    const query = searchQuery.toLowerCase()
+    return events.filter(
+      (event) =>
+        event.title.toLowerCase().includes(query) ||
+        event.description.toLowerCase().includes(query) ||
+        event.location.toLowerCase().includes(query) ||
+        event.organizer.toLowerCase().includes(query) ||
+        event.attendees.some((a) => a.toLowerCase().includes(query))
+    )
+  }, [searchQuery, events])
+
+  // Close search results when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        searchResultsRef.current &&
+        !searchResultsRef.current.contains(e.target as Node) &&
+        searchInputRef.current &&
+        !searchInputRef.current.contains(e.target as Node)
+      ) {
+        setShowSearchResults(false)
+      }
+      if (
+        settingsRef.current &&
+        !settingsRef.current.contains(e.target as Node) &&
+        !(e.target as Element)?.closest('[data-settings-btn]')
+      ) {
+        setShowSettings(false)
+      }
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(e.target as Node) &&
+        !(e.target as Element)?.closest('[data-profile-btn]')
+      ) {
+        setShowProfile(false)
+        setIsEditingProfile(false)
+      }
+      if (
+        addEventRef.current &&
+        !addEventRef.current.contains(e.target as Node) &&
+        !(e.target as Element)?.closest('[data-add-event-btn]')
+      ) {
+        setShowAddEvent(false)
+        resetNewEvent()
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
+
+  const updateSettings = (key: string, value: any) => {
+    setSettings((prev) => ({ ...prev, [key]: value }))
+  }
+
+  const timezones = [
+    "America/New_York",
+    "America/Chicago",
+    "America/Denver",
+    "America/Los_Angeles",
+    "Europe/London",
+    "Europe/Paris",
+    "Europe/Berlin",
+    "Asia/Tokyo",
+    "Asia/Shanghai",
+    "Asia/Kolkata",
+    "Australia/Sydney",
+    "Pacific/Auckland",
+  ]
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Escape") {
+      setShowSearchResults(false)
+      searchInputRef.current?.blur()
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault()
+      setSelectedSearchIndex((prev) =>
+        prev < searchResults.length - 1 ? prev + 1 : 0
+      )
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault()
+      setSelectedSearchIndex((prev) =>
+        prev > 0 ? prev - 1 : searchResults.length - 1
+      )
+    } else if (e.key === "Enter" && selectedSearchIndex >= 0) {
+      e.preventDefault()
+      handleEventClick(searchResults[selectedSearchIndex])
+      setShowSearchResults(false)
+      setSearchQuery("")
+    }
+  }
+
+  const handleSearchSelect = (event: (typeof events)[0]) => {
+    handleEventClick(event)
+    setShowSearchResults(false)
+    setSearchQuery("")
+  }
+
+  // Helper function to calculate event position and height
+  const calculateEventStyle = (startTime, endTime) => {
+    const start = Number.parseInt(startTime.split(":")[0]) + Number.parseInt(startTime.split(":")[1]) / 60
+    const end = Number.parseInt(endTime.split(":")[0]) + Number.parseInt(endTime.split(":")[1]) / 60
+    const top = (start - 8) * 80 // 80px per hour
+    const height = (end - start) * 80
+    return { top: `${top}px`, height: `${height}px` }
+  }
+
+  // Sample calendar for mini calendar
+  const daysInMonth = 31
+  const firstDayOffset = 5 // Friday is the first day of the month in this example
+  const miniCalendarDays = Array.from({ length: daysInMonth + firstDayOffset }, (_, i) =>
+    i < firstDayOffset ? null : i - firstDayOffset + 1,
+  )
+
+  // Sample my calendars
+  const myCalendars = [
+    { name: "My Calendar", color: "bg-blue-500" },
+    { name: "Work", color: "bg-green-500" },
+    { name: "Personal", color: "bg-purple-500" },
+    { name: "Family", color: "bg-orange-500" },
+  ]
+
+  const togglePlay = () => {
+    setIsPlaying(!isPlaying)
+    // Here you would typically also control the actual audio playback
+  }
+
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
       {/* Background Image */}
@@ -765,769 +1288,5 @@
                           className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-colors"
                         >
                           <Save className="h-4 w-4" />
-                          Save Changes
-                        </button>
-                        <button
-                          onClick={() => {
-                            setEditedProfile(profile)
-                            setIsEditingProfile(false)
-                          }}
-                          className="flex-1 py-2.5 bg-white/5 hover:bg-white/10 text-white rounded-lg text-sm font-medium transition-colors"
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="flex items-center justify-between">
-                        <h4 className="text-white font-medium">Personal Information</h4>
-                        <button
-                          onClick={() => setIsEditingProfile(true)}
-                          className="flex items-center gap-1.5 text-blue-400 hover:text-blue-300 text-sm transition-colors"
-                        >
-                          <Edit3 className="h-4 w-4" />
-                          Edit
-                        </button>
-                      </div>
-                      
-                      <div className="space-y-4">
-                        <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
-                          <User className="h-5 w-5 text-white/50" />
-                          <div>
-                            <p className="text-white/50 text-xs">Full Name</p>
-                            <p className="text-white text-sm">{profile.firstName} {profile.lastName}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
-                          <Mail className="h-5 w-5 text-white/50" />
-                          <div>
-                            <p className="text-white/50 text-xs">Email</p>
-                            <p className="text-white text-sm">{profile.email}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
-                          <Phone className="h-5 w-5 text-white/50" />
-                          <div>
-                            <p className="text-white/50 text-xs">Phone</p>
-                            <p className="text-white text-sm">{profile.phone}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
-                          <Globe className="h-5 w-5 text-white/50" />
-                          <div>
-                            <p className="text-white/50 text-xs">Location</p>
-                            <p className="text-white text-sm">{profile.location}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
-                          <CreditCard className="h-5 w-5 text-white/50" />
-                          <div>
-                            <p className="text-white/50 text-xs">Company</p>
-                            <p className="text-white text-sm">{profile.company} - {profile.jobTitle}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-              )}
-
-              {/* Security Tab */}
-              {profileTab === "security" && (
-                <div className="space-y-5">
-                  <h4 className="text-white font-medium">Security Settings</h4>
-                  
-                  {/* Password */}
-                  <div className="p-4 bg-white/5 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <Key className="h-5 w-5 text-white/50" />
-                        <div>
-                          <p className="text-white text-sm font-medium">Password</p>
-                          <p className="text-white/50 text-xs">Last changed: {profile.security.lastPasswordChange}</p>
-                        </div>
-                      </div>
-                      <button className="px-3 py-1.5 bg-white/10 hover:bg-white/15 text-white rounded-lg text-xs font-medium transition-colors">
-                        Change
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Two-Factor Authentication */}
-                  <div className="p-4 bg-white/5 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <Shield className="h-5 w-5 text-white/50" />
-                        <div>
-                          <p className="text-white text-sm font-medium">Two-Factor Auth</p>
-                          <p className="text-white/50 text-xs">{profile.security.twoFactor ? "Enabled" : "Disabled"}</p>
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => setProfile({ ...profile, security: { ...profile.security, twoFactor: !profile.security.twoFactor } })}
-                        className={`w-12 h-6 rounded-full transition-colors relative ${profile.security.twoFactor ? "bg-green-500" : "bg-white/20"}`}
-                      >
-                        <div className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-transform ${profile.security.twoFactor ? "translate-x-6" : "translate-x-0.5"}`} />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Active Sessions */}
-                  <div className="p-4 bg-white/5 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <Monitor className="h-5 w-5 text-white/50" />
-                        <div>
-                          <p className="text-white text-sm font-medium">Active Sessions</p>
-                          <p className="text-white/50 text-xs">{profile.security.loginSessions} devices logged in</p>
-                        </div>
-                      </div>
-                      <button className="px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg text-xs font-medium transition-colors">
-                        Sign Out All
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Login History */}
-                  <div>
-                    <h5 className="text-white/70 text-sm font-medium mb-3">Recent Activity</h5>
-                    <div className="space-y-2">
-                      {[
-                        { device: "MacBook Pro", location: "Mumbai, India", time: "2 hours ago", current: true },
-                        { device: "iPhone 15", location: "Mumbai, India", time: "1 day ago", current: false },
-                        { device: "Chrome on Windows", location: "Mumbai, India", time: "3 days ago", current: false },
-                      ].map((session, i) => (
-                        <div key={i} className="flex items-center justify-between p-2 bg-white/5 rounded-lg">
-                          <div className="flex items-center gap-2">
-                            <Monitor className="h-4 w-4 text-white/40" />
-                            <div>
-                              <p className="text-white text-xs">{session.device}</p>
-                              <p className="text-white/40 text-xs">{session.location}</p>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <p className="text-white/50 text-xs">{session.time}</p>
-                            {session.current && (
-                              <span className="text-green-400 text-xs">Current</span>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Preferences Tab */}
-              {profileTab === "preferences" && (
-                <div className="space-y-5">
-                  <h4 className="text-white font-medium">Notification Preferences</h4>
-                  
-                  {[
-                    { key: "email", label: "Email Notifications", desc: "Receive updates via email", icon: Mail },
-                    { key: "push", label: "Push Notifications", desc: "Browser push notifications", icon: Bell },
-                    { key: "sms", label: "SMS Notifications", desc: "Text message alerts", icon: Phone },
-                  ].map((item) => (
-                    <div key={item.key} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <item.icon className="h-5 w-5 text-white/50" />
-                        <div>
-                          <p className="text-white text-sm">{item.label}</p>
-                          <p className="text-white/50 text-xs">{item.desc}</p>
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => setProfile({
-                          ...profile,
-                          notifications: { ...profile.notifications, [item.key]: !profile.notifications[item.key as keyof typeof profile.notifications] }
-                        })}
-                        className={`w-12 h-6 rounded-full transition-colors relative ${profile.notifications[item.key as keyof typeof profile.notifications] ? "bg-blue-500" : "bg-white/20"}`}
-                      >
-                        <div className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-transform ${profile.notifications[item.key as keyof typeof profile.notifications] ? "translate-x-6" : "translate-x-0.5"}`} />
-                      </button>
-                    </div>
-                  ))}
-
-                  <h4 className="text-white font-medium pt-2">Calendar Preferences</h4>
-                  
-                  <div className="space-y-2">
-                    <button className="w-full flex items-center justify-between p-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors">
-                      <div className="flex items-center gap-3">
-                        <Palette className="h-5 w-5 text-white/50" />
-                        <span className="text-white text-sm">Calendar Colors</span>
-                      </div>
-                      <ChevronRight className="h-4 w-4 text-white/30" />
-                    </button>
-                    <button className="w-full flex items-center justify-between p-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors">
-                      <div className="flex items-center gap-3">
-                        <Clock className="h-5 w-5 text-white/50" />
-                        <span className="text-white text-sm">Default Reminder Time</span>
-                      </div>
-                      <ChevronRight className="h-4 w-4 text-white/30" />
-                    </button>
-                    <button className="w-full flex items-center justify-between p-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors">
-                      <div className="flex items-center gap-3">
-                        <Globe className="h-5 w-5 text-white/50" />
-                        <span className="text-white text-sm">Import/Export Calendar</span>
-                      </div>
-                      <ChevronRight className="h-4 w-4 text-white/30" />
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* Billing Tab */}
-              {profileTab === "billing" && (
-                <div className="space-y-5">
-                  {/* Current Plan */}
-                  <div className="p-4 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-lg border border-blue-500/30">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-white font-medium">Pro Plan</p>
-                        <p className="text-white/60 text-sm mt-1">Unlimited events & storage</p>
-                      </div>
-                      <span className="px-3 py-1 bg-blue-500 text-white text-xs font-medium rounded-full">Active</span>
-                    </div>
-                    <div className="mt-4 pt-4 border-t border-white/10">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-white/60">Next billing date</span>
-                        <span className="text-white">Feb 15, 2026</span>
-                      </div>
-                      <div className="flex justify-between text-sm mt-2">
-                        <span className="text-white/60">Amount</span>
-                        <span className="text-white">$9.99/month</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Payment Method */}
-                  <div className="p-4 bg-white/5 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <CreditCard className="h-5 w-5 text-white/50" />
-                        <div>
-                          <p className="text-white text-sm font-medium">Payment Method</p>
-                          <p className="text-white/50 text-xs">Visa ending in 4242</p>
-                        </div>
-                      </div>
-                      <button className="px-3 py-1.5 bg-white/10 hover:bg-white/15 text-white rounded-lg text-xs font-medium transition-colors">
-                        Update
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Billing History */}
-                  <div>
-                    <h5 className="text-white/70 text-sm font-medium mb-3">Billing History</h5>
-                    <div className="space-y-2">
-                      {[
-                        { date: "Jan 15, 2026", amount: "$9.99", status: "Paid" },
-                        { date: "Dec 15, 2025", amount: "$9.99", status: "Paid" },
-                        { date: "Nov 15, 2025", amount: "$9.99", status: "Paid" },
-                      ].map((invoice, i) => (
-                        <div key={i} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
-                          <div>
-                            <p className="text-white text-sm">{invoice.date}</p>
-                            <p className="text-white/50 text-xs">Monthly subscription</p>
-                          </div>
-                          <div className="text-right">
-                            <p className="text-white text-sm">{invoice.amount}</p>
-                            <p className="text-green-400 text-xs">{invoice.status}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Profile Footer */}
-            <div className="px-6 py-4 border-t border-white/10">
-              <button className="w-full flex items-center justify-center gap-2 py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-lg text-sm font-medium transition-colors">
-                <LogOut className="h-4 w-4" />
-                Sign Out
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Settings Panel */}
-        {showSettings && (
-          <div
-            ref={settingsRef}
-            className="fixed top-20 right-8 w-[420px] max-h-[80vh] bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl overflow-hidden z-50"
-          >
-            {/* Settings Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
-              <div className="flex items-center gap-2">
-                <Settings className="h-5 w-5 text-white" />
-                <h2 className="text-lg font-semibold text-white">Settings</h2>
-              </div>
-              <button
-                onClick={() => setShowSettings(false)}
-                className="p-1 rounded-full hover:bg-white/10 text-white/70 hover:text-white transition-colors"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-
-            {/* Settings Tabs */}
-            <div className="flex border-b border-white/10 px-4">
-              {[
-                { id: "general", label: "General", icon: Globe },
-                { id: "appearance", label: "Appearance", icon: Palette },
-                { id: "calendar", label: "Calendar", icon: Calendar },
-                { id: "notifications", label: "Alerts", icon: Bell },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setSettingsTab(tab.id as any)}
-                  className={`flex items-center gap-1.5 px-3 py-3 text-xs font-medium transition-colors border-b-2 ${
-                    settingsTab === tab.id
-                      ? "border-blue-400 text-white"
-                      : "border-transparent text-white/50 hover:text-white/70"
-                  }`}
-                >
-                  <tab.icon className="h-3.5 w-3.5" />
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Settings Content */}
-            <div className="p-6 overflow-y-auto max-h-[60vh]">
-              {/* General Tab */}
-              {settingsTab === "general" && (
-                <div className="space-y-6">
-                  {/* Time Format */}
-                  <div>
-                    <label className="text-white text-sm font-medium mb-3 block">Time Format</label>
-                    <div className="flex gap-2">
-                      {["12h", "24h"].map((format) => (
-                        <button
-                          key={format}
-                          onClick={() => updateSettings("timeFormat", format)}
-                          className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                            settings.timeFormat === format
-                              ? "bg-blue-500 text-white shadow-lg shadow-blue-500/30"
-                              : "bg-white/5 text-white/60 hover:bg-white/10"
-                          }`}
-                        >
-                          {format === "12h" ? "12 Hour" : "24 Hour"}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Start of Week */}
-                  <div>
-                    <label className="text-white text-sm font-medium mb-3 block">Start of Week</label>
-                    <div className="flex gap-2">
-                      {["sunday", "monday"].map((day) => (
-                        <button
-                          key={day}
-                          onClick={() => updateSettings("startOfWeek", day)}
-                          className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all capitalize ${
-                            settings.startOfWeek === day
-                              ? "bg-blue-500 text-white shadow-lg shadow-blue-500/30"
-                              : "bg-white/5 text-white/60 hover:bg-white/10"
-                          }`}
-                        >
-                          {day}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Default View */}
-                  <div>
-                    <label className="text-white text-sm font-medium mb-3 block">Default View</label>
-                    <div className="flex gap-2">
-                      {["day", "week", "month"].map((view) => (
-                        <button
-                          key={view}
-                          onClick={() => updateSettings("defaultView", view)}
-                          className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all capitalize ${
-                            settings.defaultView === view
-                              ? "bg-blue-500 text-white shadow-lg shadow-blue-500/30"
-                              : "bg-white/5 text-white/60 hover:bg-white/10"
-                          }`}
-                        >
-                          {view}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Timezone */}
-                  <div>
-                    <label className="text-white text-sm font-medium mb-3 block flex items-center gap-2">
-                      <Globe className="h-4 w-4" />
-                      Timezone
-                    </label>
-                    <select
-                      value={settings.timezone}
-                      onChange={(e) => updateSettings("timezone", e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
-                    >
-                      {timezones.map((tz) => (
-                        <option key={tz} value={tz} className="bg-gray-800 text-white">
-                          {tz.replace(/_/g, " ")}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* Working Hours */}
-                  <div>
-                    <label className="text-white text-sm font-medium mb-3 block flex items-center gap-2">
-                      <Clock3 className="h-4 w-4" />
-                      Working Hours
-                    </label>
-                    <div className="flex items-center gap-3">
-                      <select
-                        value={settings.workingHoursStart}
-                        onChange={(e) => updateSettings("workingHoursStart", Number(e.target.value))}
-                        className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
-                      >
-                        {Array.from({ length: 24 }, (_, i) => (
-                          <option key={i} value={i} className="bg-gray-800 text-white">
-                            {i === 0 ? "12 AM" : i < 12 ? `${i} AM` : i === 12 ? "12 PM" : `${i - 12} PM`}
-                          </option>
-                        ))}
-                      </select>
-                      <span className="text-white/50 text-sm">to</span>
-                      <select
-                        value={settings.workingHoursEnd}
-                        onChange={(e) => updateSettings("workingHoursEnd", Number(e.target.value))}
-                        className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
-                      >
-                        {Array.from({ length: 24 }, (_, i) => (
-                          <option key={i} value={i} className="bg-gray-800 text-white">
-                            {i === 0 ? "12 AM" : i < 12 ? `${i} AM` : i === 12 ? "12 PM" : `${i - 12} PM`}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Appearance Tab */}
-              {settingsTab === "appearance" && (
-                <div className="space-y-6">
-                  {/* Theme */}
-                  <div>
-                    <label className="text-white text-sm font-medium mb-3 block">Theme</label>
-                    <div className="flex gap-2">
-                      {[
-                        { id: "light", label: "Light", icon: Sun },
-                        { id: "dark", label: "Dark", icon: Moon },
-                        { id: "system", label: "System", icon: Monitor },
-                      ].map((theme) => (
-                        <button
-                          key={theme.id}
-                          onClick={() => updateSettings("theme", theme.id)}
-                          className={`flex-1 flex flex-col items-center gap-2 py-3 rounded-lg text-sm font-medium transition-all ${
-                            settings.theme === theme.id
-                              ? "bg-blue-500 text-white shadow-lg shadow-blue-500/30"
-                              : "bg-white/5 text-white/60 hover:bg-white/10"
-                          }`}
-                        >
-                          <theme.icon className="h-5 w-5" />
-                          {theme.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Event Density */}
-                  <div>
-                    <label className="text-white text-sm font-medium mb-3 block">Event Density</label>
-                    <div className="flex gap-2">
-                      {["compact", "comfortable", "spacious"].map((density) => (
-                        <button
-                          key={density}
-                          onClick={() => updateSettings("eventDensity", density)}
-                          className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all capitalize ${
-                            settings.eventDensity === density
-                              ? "bg-blue-500 text-white shadow-lg shadow-blue-500/30"
-                              : "bg-white/5 text-white/60 hover:bg-white/10"
-                          }`}
-                        >
-                          {density}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Show End Times */}
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-white text-sm font-medium">Show End Times</p>
-                      <p className="text-white/50 text-xs mt-0.5">Display end time on events</p>
-                    </div>
-                    <button
-                      onClick={() => updateSettings("showEndTimes", !settings.showEndTimes)}
-                      className={`w-12 h-6 rounded-full transition-colors relative ${
-                        settings.showEndTimes ? "bg-blue-500" : "bg-white/20"
-                      }`}
-                    >
-                      <div
-                        className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-transform ${
-                          settings.showEndTimes ? "translate-x-6" : "translate-x-0.5"
-                        }`}
-                      />
-                    </button>
-                  </div>
-
-                  {/* Show Weekends */}
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-white text-sm font-medium">Show Weekends</p>
-                      <p className="text-white/50 text-xs mt-0.5">Include Sat & Sun in week view</p>
-                    </div>
-                    <button
-                      onClick={() => updateSettings("showWeekends", !settings.showWeekends)}
-                      className={`w-12 h-6 rounded-full transition-colors relative ${
-                        settings.showWeekends ? "bg-blue-500" : "bg-white/20"
-                      }`}
-                    >
-                      <div
-                        className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-transform ${
-                          settings.showWeekends ? "translate-x-6" : "translate-x-0.5"
-                        }`}
-                      />
-                    </button>
-                  </div>
-
-                  {/* Show Declined Events */}
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-white text-sm font-medium">Show Declined Events</p>
-                      <p className="text-white/50 text-xs mt-0.5">Display events you declined</p>
-                    </div>
-                    <button
-                      onClick={() => updateSettings("showDeclinedEvents", !settings.showDeclinedEvents)}
-                      className={`w-12 h-6 rounded-full transition-colors relative ${
-                        settings.showDeclinedEvents ? "bg-blue-500" : "bg-white/20"
-                      }`}
-                    >
-                      <div
-                        className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-transform ${
-                          settings.showDeclinedEvents ? "translate-x-6" : "translate-x-0.5"
-                        }`}
-                      />
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* Calendar Tab */}
-              {settingsTab === "calendar" && (
-                <div className="space-y-6">
-                  {/* AI Assistant */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-purple-500/20 rounded-lg">
-                        <Sparkles className="h-5 w-5 text-purple-400" />
-                      </div>
-                      <div>
-                        <p className="text-white text-sm font-medium">AI Assistant</p>
-                        <p className="text-white/50 text-xs mt-0.5">Smart suggestions & tips</p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => updateSettings("aiAssistant", !settings.aiAssistant)}
-                      className={`w-12 h-6 rounded-full transition-colors relative ${
-                        settings.aiAssistant ? "bg-blue-500" : "bg-white/20"
-                      }`}
-                    >
-                      <div
-                        className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-transform ${
-                          settings.aiAssistant ? "translate-x-6" : "translate-x-0.5"
-                        }`}
-                      />
-                    </button>
-                  </div>
-
-                  {/* Sound Effects */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-green-500/20 rounded-lg">
-                        {settings.soundEnabled ? (
-                          <Volume2 className="h-5 w-5 text-green-400" />
-                        ) : (
-                          <VolumeX className="h-5 w-5 text-white/40" />
-                        )}
-                      </div>
-                      <div>
-                        <p className="text-white text-sm font-medium">Sound Effects</p>
-                        <p className="text-white/50 text-xs mt-0.5">Play sounds for notifications</p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => updateSettings("soundEnabled", !settings.soundEnabled)}
-                      className={`w-12 h-6 rounded-full transition-colors relative ${
-                        settings.soundEnabled ? "bg-blue-500" : "bg-white/20"
-                      }`}
-                    >
-                      <div
-                        className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-transform ${
-                          settings.soundEnabled ? "translate-x-6" : "translate-x-0.5"
-                        }`}
-                      />
-                    </button>
-                  </div>
-
-                  {/* Quick Actions */}
-                  <div>
-                    <label className="text-white text-sm font-medium mb-3 block">Quick Actions</label>
-                    <div className="grid grid-cols-2 gap-2">
-                      <button className="flex items-center gap-2 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-lg text-white/70 hover:text-white text-sm transition-colors">
-                        <Calendar className="h-4 w-4" />
-                        Export Calendar
-                      </button>
-                      <button className="flex items-center gap-2 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-lg text-white/70 hover:text-white text-sm transition-colors">
-                        <Globe className="h-4 w-4" />
-                        Import Events
-                      </button>
-                      <button className="flex items-center gap-2 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-lg text-white/70 hover:text-white text-sm transition-colors">
-                        <Palette className="h-4 w-4" />
-                        Customize Colors
-                      </button>
-                      <button className="flex items-center gap-2 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-lg text-white/70 hover:text-white text-sm transition-colors">
-                        <Clock3 className="h-4 w-4" />
-                        Set Reminders
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Notifications Tab */}
-              {settingsTab === "notifications" && (
-                <div className="space-y-6">
-                  {/* Notifications */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-yellow-500/20 rounded-lg">
-                        <Bell className="h-5 w-5 text-yellow-400" />
-                      </div>
-                      <div>
-                        <p className="text-white text-sm font-medium">Push Notifications</p>
-                        <p className="text-white/50 text-xs mt-0.5">Get notified about events</p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => updateSettings("notifications", !settings.notifications)}
-                      className={`w-12 h-6 rounded-full transition-colors relative ${
-                        settings.notifications ? "bg-blue-500" : "bg-white/20"
-                      }`}
-                    >
-                      <div
-                        className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-transform ${
-                          settings.notifications ? "translate-x-6" : "translate-x-0.5"
-                        }`}
-                      />
-                    </button>
-                  </div>
-
-                  {/* Notification Settings */}
-                  {settings.notifications && (
-                    <div className="space-y-3 pl-14">
-                      {[
-                        { label: "Event reminders", desc: "15 minutes before", enabled: true },
-                        { label: "Daily agenda", desc: "8:00 AM daily", enabled: true },
-                        { label: "Event changes", desc: "When events are updated", enabled: false },
-                        { label: "Invitations", desc: "New meeting invites", enabled: true },
-                      ].map((item, i) => (
-                        <div key={i} className="flex items-center justify-between py-2">
-                          <div>
-                            <p className="text-white text-sm">{item.label}</p>
-                            <p className="text-white/40 text-xs">{item.desc}</p>
-                          </div>
-                          <button
-                            className={`w-10 h-5 rounded-full transition-colors relative ${
-                              item.enabled ? "bg-blue-500" : "bg-white/20"
-                            }`}
-                          >
-                            <div
-                              className={`w-4 h-4 bg-white rounded-full absolute top-0.5 transition-transform ${
-                                item.enabled ? "translate-x-5" : "translate-x-0.5"
-                              }`}
-                            />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Quiet Hours */}
-                  <div>
-                    <label className="text-white text-sm font-medium mb-3 block flex items-center gap-2">
-                      <Moon className="h-4 w-4" />
-                      Quiet Hours
-                    </label>
-                    <div className="flex items-center gap-3">
-                      <select className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer">
-                        {[20, 21, 22, 23].map((h) => (
-                          <option key={h} value={h} className="bg-gray-800 text-white">
-                            {h > 12 ? `${h - 12} PM` : h === 12 ? "12 PM" : `${h} PM`}
-                          </option>
-                        ))}
-                      </select>
-                      <span className="text-white/50 text-sm">to</span>
-                      <select className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer">
-                        {[6, 7, 8, 9].map((h) => (
-                          <option key={h} value={h} className="bg-gray-800 text-white">
-                            {h === 0 ? "12 AM" : h < 12 ? `${h} AM` : "12 PM"}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Settings Footer */}
-            <div className="px-6 py-4 border-t border-white/10 flex items-center justify-between">
-              <button
-                onClick={() => {
-                  setSettings({
-                    timeFormat: "12h",
-                    startOfWeek: "sunday",
-                    showWeekends: true,
-                    showEndTimes: true,
-                    eventDensity: "comfortable",
-                    aiAssistant: true,
-                    soundEnabled: true,
-                    notifications: true,
-                    workingHoursStart: 8,
-                    workingHoursEnd: 17,
-                    timezone: "America/New_York",
-                    theme: "dark",
-                    showDeclinedEvents: false,
-                    defaultView: "week",
-                  })
-                }}
-                className="text-white/50 hover:text-white text-sm transition-colors"
-              >
-                Reset to default
-              </button>
-              <button
-                onClick={() => setShowSettings(false)}
-                className="px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-colors"
-              >
-                Done
-              </button>
-            </div>
-          </div>
-        )}
-      </main>
-    </div>
-  )
+  return (<></>)
 }
