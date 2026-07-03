@@ -53,6 +53,35 @@ export default function Home() {
   const searchInputRef = useRef<HTMLInputElement>(null)
   const searchResultsRef = useRef<HTMLDivElement>(null)
 
+  // Profile state
+  const [showProfile, setShowProfile] = useState(false)
+  const [profileTab, setProfileTab] = useState("account" as "account" | "security" | "preferences" | "billing")
+  const [profile, setProfile] = useState({
+    firstName: "Girish",
+    lastName: "Lade",
+    email: "girishlade111@gmail.com",
+    phone: "+91 98765 43210",
+    avatar: "",
+    bio: "Software Developer & Tech Enthusiast",
+    location: "Mumbai, India",
+    company: "Lovy-tech",
+    jobTitle: "Full Stack Developer",
+    website: "https://girishlade.com",
+    notifications: {
+      email: true,
+      push: true,
+      sms: false,
+    },
+    security: {
+      twoFactor: false,
+      lastPasswordChange: "2025-01-15",
+      loginSessions: 3,
+    },
+  })
+  const [isEditingProfile, setIsEditingProfile] = useState(false)
+  const [editedProfile, setEditedProfile] = useState(profile)
+  const profileRef = useRef<HTMLDivElement>(null)
+
   // Settings state
   const [showSettings, setShowSettings] = useState(false)
   const [settings, setSettings] = useState({
