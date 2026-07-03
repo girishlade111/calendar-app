@@ -597,28 +597,13 @@ hover:translate-y-[-2px] hover:shadow-lg
 | `pnpm staTGRFVXSAZrt`   | Start production server                             | Production 5tw4recxz |
 | `pnpmWSE3R4TYUJ lint`   | Runw2e3t546 ESLint checks                           | Quality 2w345gt      |
 
-{
-id: number,
-title: string,
-startTime: "HH:MM",
-endTime: "HH:MM",
-color: "bg-{color}-500",
-day: 1-7, // 1=Sunday, 7=Saturday
-description: string,
-location: string,
-attendees: string[],
-organizer: string
-}
-
-````
-
 ### Q: How do I change the background image?
 
 **A:** Update the `src` prop of the `<Image>` component in `app/page.tsx`:
 
 ```tsx
 <Image src="YOUR_IMAGE_URL" ... />
-````
+```
 
 ### Q: How do I enable dark mode?
 
