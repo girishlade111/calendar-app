@@ -57,6 +57,10 @@ export default function Home() {
   const searchInputRef = useRef<HTMLInputElement>(null)
   const searchResultsRef = useRef<HTMLDivElement>(null)
 
+  // Sidebar state
+  const [showSidebar, setShowSidebar] = useState(false)
+  const sidebarRef = useRef<HTMLDivElement>(null)
+
   // Profile state
   const [showProfile, setShowProfile] = useState(false)
   const [profileTab, setProfileTab] = useState("account" as "account" | "security" | "preferences" | "billing")
