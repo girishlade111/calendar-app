@@ -40,6 +40,10 @@ import {
   CreditCard,
   HelpCircle,
   MessageSquare,
+  Repeat,
+  CalendarDays,
+  BellRing,
+  Clock10,
 } from "lucide-react"
 
 export default function Home() {
