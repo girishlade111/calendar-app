@@ -535,26 +535,16 @@ rtyui
 |----------|-------|
 | `--background` | `222.2 84% 4.9%` (dark navy) |
 | `--foreground` | `210 40% 98%` (white) |
-| `--primary` | `217.2 91.2% 59.8%` (bright blue) |
-| `--border` | `217.2 32.6% 17.5%` (dark border) |
+| `--primary` | rop-blur-lg border border-white/20 shadow-xl
 
----
-
-## 🎨 Styling System
-
-### Glassmorphism Classescvbnm,.
-
-```css
-/*fghjk/ Frosted glass panel */
-bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl
-
-/* Semi-transparent header */
+/_ Semi-transparent header _/
 bg-white/10 backdrop-blur-sm border border-white/20
 
-/* AI Popup */
+/_ AI Popup _/
 bg-gradient-to-br from-blue-400/30 via-blue-500/30 to-blue-600/30
 backdrop-blur-lg border border-blue-300/30
-```
+
+````
 
 ### Animation Classes
 
@@ -569,7 +559,7 @@ style={{ animationDelay: "0.6s" }}  /* Calendar */
 
 /* Hover effects */
 hover:translate-y-[-2px] hover:shadow-lg
-```
+````
 
 ### Event Color System
 
