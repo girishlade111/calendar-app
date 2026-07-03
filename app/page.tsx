@@ -41,6 +41,27 @@ export default function Home() {
   const searchInputRef = useRef<HTMLInputElement>(null)
   const searchResultsRef = useRef<HTMLDivElement>(null)
 
+  // Settings state
+  const [showSettings, setShowSettings] = useState(false)
+  const [settings, setSettings] = useState({
+    timeFormat: "12h" as "12h" | "24h",
+    startOfWeek: "sunday" as "sunday" | "monday",
+    showWeekends: true,
+    showEndTimes: true,
+    eventDensity: "comfortable" as "compact" | "comfortable" | "spacious",
+    aiAssistant: true,
+    soundEnabled: true,
+    notifications: true,
+    workingHoursStart: 8,
+    workingHoursEnd: 17,
+    timezone: "America/New_York",
+    theme: "dark" as "light" | "dark" | "system",
+    showDeclinedEvents: false,
+    defaultView: "week" as "day" | "week" | "month",
+  })
+  const [settingsTab, setSettingsTab] = useState("general" as "general" | "appearance" | "calendar" | "notifications")
+  const settingsRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     setIsLoaded(true)
 
