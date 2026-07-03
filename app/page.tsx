@@ -209,10 +209,13 @@ export default function Home() {
     location: "",
     startTime: "09:00",
     endTime: "10:00",
-    day: 1,
+    date: new Date().toISOString().split("T")[0],
     color: "bg-blue-500",
     attendees: "",
     organizer: "You",
+    isAllDay: false,
+    repeat: "none",
+    reminder: "10",
   })
   const addEventRef = useRef<HTMLDivElement>(null)
 
@@ -227,6 +230,36 @@ export default function Home() {
     { name: "Cyan", value: "bg-cyan-500" },
     { name: "Red", value: "bg-red-400" },
     { name: "Orange", value: "bg-orange-400" },
+  ]
+
+  const timeOptions = Array.from({ length: 48 }, (_, i) => {
+    const h = Math.floor(i / 2)
+    const m = (i % 2) * 30
+    const ampm = h < 12 ? "AM" : "PM"
+    const displayH = h === 0 ? 12 : h > 12 ? h - 12 : h
+    return {
+      value: `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`,
+      label: `${displayH}:${String(m).padStart(2, "0")} ${ampm}`,
+    }
+  })
+
+  const repeatOptions = [
+    { value: "none", label: "Does not repeat" },
+    { value: "daily", label: "Every day" },
+    { value: "weekly", label: "Every week" },
+    { value: "biweekly", label: "Every 2 weeks" },
+    { value: "monthly", label: "Every month" },
+    { value: "yearly", label: "Every year" },
+  ]
+
+  const reminderOptions = [
+    { value: "0", label: "No reminder" },
+    { value: "5", label: "5 minutes before" },
+    { value: "10", label: "10 minutes before" },
+    { value: "15", label: "15 minutes before" },
+    { value: "30", label: "30 minutes before" },
+    { value: "60", label: "1 hour before" },
+    { value: "1440", label: "1 day before" },
   ]
 
   // Updated sample calendar events with all events before 4 PM
