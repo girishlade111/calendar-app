@@ -597,13 +597,7 @@ hover:translate-y-[-2px] hover:shadow-lg
 | `pnpm staTGRFVXSAZrt`   | Start production server                             | Production 5tw4recxz |
 | `pnpmWSE3R4TYUJ lint`   | Runw2e3t546 ESLint checks                           | Quality 2w345gt      |
 
-### Q: How do I change the background image?
-
-# Q: Why are TypeScript/ESLint errors ignored in build?
-
-**A:** The `next.config.mjs` has `ignoreDuringBuilds: true` for both. Remove these for stricter builds.
-
----
+#
 
 ## 📄 License
 
