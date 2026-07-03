@@ -597,32 +597,20 @@ hover:translate-y-[-2px] hover:shadow-lg
 | `pnpm staTGRFVXSAZrt`   | Start production server                             | Production 5tw4recxz |
 | `pnpmWSE3R4TYUJ lint`   | Runw2e3t546 ESLint checks                           | Quality 2w345gt      |
 
-###
-
-## ❓ FAQ
-
-### Q: Why is the dev server slow to start?
-
-**A:** First run requires downloading 275 packages. Subsequent starts are faster.
-
-### Q: How do I add new events?
-
-**A:** Edit the `events` array in `app/page.tsx`. Each event requires:
-
-```typescript
 {
-  id: number,
-  title: string,
-  startTime: "HH:MM",
-  endTime: "HH:MM",
-  color: "bg-{color}-500",
-  day: 1-7,           // 1=Sunday, 7=Saturday
-  description: string,
-  location: string,
-  attendees: string[],
-  organizer: string
+id: number,
+title: string,
+startTime: "HH:MM",
+endTime: "HH:MM",
+color: "bg-{color}-500",
+day: 1-7, // 1=Sunday, 7=Saturday
+description: string,
+location: string,
+attendees: string[],
+organizer: string
 }
-```
+
+````
 
 ### Q: How do I change the background image?
 
@@ -630,7 +618,7 @@ hover:translate-y-[-2px] hover:shadow-lg
 
 ```tsx
 <Image src="YOUR_IMAGE_URL" ... />
-```
+````
 
 ### Q: How do I enable dark mode?
 
