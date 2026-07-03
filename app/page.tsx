@@ -627,6 +627,110 @@ export default function Home() {
         priority
       />
 
+      {/* Sidebar Overlay */}
+      {showSidebar && (
+        <div className="fixed inset-0 bg-black/40 z-40" onClick={() => setShowSidebar(false)} />
+      )}
+
+      {/* Sidebar */}
+      <div
+        ref={sidebarRef}
+        className={`fixed top-0 left-0 h-full w-72 bg-white/10 backdrop-blur-xl border-r border-white/15 z-50 transform transition-transform duration-300 ease-in-out ${
+          showSidebar ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        {/* Sidebar Header */}
+        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center">
+              <Calendar className="h-5 w-5 text-blue-400" />
+            </div>
+            <div>
+              <h2 className="text-base font-semibold text-white">Calendar</h2>
+              <p className="text-xs text-white/50">Manage your events</p>
+            </div>
+          </div>
+          <button
+            onClick={() => setShowSidebar(false)}
+            className="p-2 rounded-xl hover:bg-white/10 text-white/60 hover:text-white transition-colors"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+
+        {/* Sidebar Navigation */}
+        <nav className="p-4 space-y-1">
+          <button
+            onClick={() => { setShowSidebar(false); setCurrentView("day") }}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/10 transition-colors text-sm font-medium"
+          >
+            <Clock className="h-4 w-4 text-blue-400" />
+            Day View
+          </button>
+          <button
+            onClick={() => { setShowSidebar(false); setCurrentView("week") }}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/10 transition-colors text-sm font-medium"
+          >
+            <CalendarDays className="h-4 w-4 text-green-400" />
+            Week View
+          </button>
+          <button
+            onClick={() => { setShowSidebar(false); setCurrentView("month") }}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/10 transition-colors text-sm font-medium"
+          >
+            <Calendar className="h-4 w-4 text-purple-400" />
+            Month View
+          </button>
+
+          <div className="border-t border-white/10 my-3" />
+
+          <button
+            onClick={() => { setShowSidebar(false); goToToday() }}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/10 transition-colors text-sm font-medium"
+          >
+            <CalendarDays className="h-4 w-4 text-yellow-400" />
+            Today
+          </button>
+          <button
+            onClick={() => { setShowSidebar(false); setShowAddEvent(true) }}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/10 transition-colors text-sm font-medium"
+          >
+            <Plus className="h-4 w-4 text-blue-400" />
+            New Event
+          </button>
+
+          <div className="border-t border-white/10 my-3" />
+
+          <button
+            onClick={() => { setShowSidebar(false); setShowSettings(true) }}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/10 transition-colors text-sm font-medium"
+          >
+            <Settings className="h-4 w-4 text-white/60" />
+            Settings
+          </button>
+          <button
+            onClick={() => { setShowSidebar(false); setShowProfile(true) }}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/10 transition-colors text-sm font-medium"
+          >
+            <User className="h-4 w-4 text-white/60" />
+            Profile
+          </button>
+        </nav>
+
+        {/* Sidebar Footer */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10">
+          <div className="flex items-center gap-3 px-4 py-2">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-xs font-bold">
+              {profile.firstName?.[0]}{profile.lastName?.[0]}
+            </div>
+            <div>
+              <p className="text-sm text-white font-medium">{profile.firstName} {profile.lastName}</p>
+              <p className="text-xs text-white/50">{profile.email}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Navigation */}
       <header
         className={`absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-8 py-6 opacity-0 ${isLoaded ? "animate-fade-in" : ""}`}
