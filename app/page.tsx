@@ -714,10 +714,10 @@ export default function Home() {
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-white font-medium">{currentMonth}</h3>
                 <div className="flex gap-1">
-                  <button className="p-1 rounded-full hover:bg-white/20">
+                  <button onClick={() => navigateMonth(-1)} className="p-1 rounded-full hover:bg-white/20">
                     <ChevronLeft className="h-4 w-4 text-white" />
                   </button>
-                  <button className="p-1 rounded-full hover:bg-white/20">
+                  <button onClick={() => navigateMonth(1)} className="p-1 rounded-full hover:bg-white/20">
                     <ChevronRight className="h-4 w-4 text-white" />
                   </button>
                 </div>
