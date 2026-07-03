@@ -450,7 +450,6 @@ export default function Home() {
   }
   const weekDayLabels = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
   const weekDays = weekDayLabels // keep for backward compat
-  const weekDates = [3, 4, 5, 6, 7, 8, 9]
   const timeSlots = Array.from({ length: 9 }, (_, i) => i + 8) // 8 AM to 4 PM
 
   // Search functionality
