@@ -601,13 +601,6 @@ hover:translate-y-[-2px] hover:shadow-lg
 
 ````
 
----
-ally
-
-**Environment Variables:**
-
-- No environment variables required for basic functionality
-
 **Build Settings:**
 
 - Framework: Next.js
