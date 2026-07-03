@@ -535,6 +535,13 @@ export default function Home() {
         setShowAddEvent(false)
         resetNewEvent()
       }
+      if (
+        sidebarRef.current &&
+        !sidebarRef.current.contains(e.target as Node) &&
+        !(e.target as Element)?.closest('[data-sidebar-btn]')
+      ) {
+        setShowSidebar(false)
+      }
     }
     document.addEventListener("mousedown", handleClickOutside)
     return () => document.removeEventListener("mousedown", handleClickOutside)
