@@ -542,7 +542,7 @@ rtyui
 
 ## 🎨 Styling System
 
-### Glassmorphism Classes
+### Glassmorphism Classescvbnm,.
 
 ```css
 /*fghjk/ Frosted glass panel */
