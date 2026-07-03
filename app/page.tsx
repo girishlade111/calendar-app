@@ -862,9 +862,213 @@ export default function Home() {
                   >
                     <Pause className="h-4 w-4" />
                     <span>Pause Hans Zimmer</span>
-                  </button>
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Add Event Modal */}
+        {showAddEvent && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+            <div
+              ref={addEventRef}
+              className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl w-full max-w-lg mx-4 overflow-hidden"
+            >
+              {/* Modal Header */}
+              <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
+                <div className="flex items-center gap-2">
+                  <Plus className="h-5 w-5 text-blue-400" />
+                  <h2 className="text-lg font-semibold text-white">Create New Event</h2>
                 </div>
-              )}
+                <button
+                  onClick={() => {
+                    setShowAddEvent(false)
+                    resetNewEvent()
+                  }}
+                  className="p-1 rounded-full hover:bg-white/10 text-white/70 hover:text-white transition-colors"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              {/* Modal Content */}
+              <div className="p-6 space-y-5">
+                {/* Title */}
+                <div>
+                  <label className="text-white/70 text-sm mb-1.5 block">Event Title *</label>
+                  <input
+                    type="text"
+                    value={newEvent.title}
+                    onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
+                    placeholder="Enter event title"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                {/* Description */}
+                <div>
+                  <label className="text-white/70 text-sm mb-1.5 block">Description</label>
+                  <textarea
+                    value={newEvent.description}
+                    onChange={(e) => setNewEvent({ ...newEvent, description: e.target.value })}
+                    placeholder="Add event description"
+                    rows={2}
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                  />
+                </div>
+
+                {/* Location */}
+                <div>
+                  <label className="text-white/70 text-sm mb-1.5 block flex items-center gap-1.5">
+                    <MapPin className="h-3.5 w-3.5" />
+                    Location
+                  </label>
+                  <input
+                    type="text"
+                    value={newEvent.location}
+                    onChange={(e) => setNewEvent({ ...newEvent, location: e.target.value })}
+                    placeholder="Add location"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                {/* Time */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-white/70 text-sm mb-1.5 block">Start Time</label>
+                    <select
+                      value={newEvent.startTime}
+                      onChange={(e) => setNewEvent({ ...newEvent, startTime: e.target.value })}
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
+                    >
+                      {Array.from({ length: 24 }, (_, i) => {
+                        const h = i
+                        const label = h === 0 ? "12:00 AM" : h < 12 ? `${h}:00 AM` : h === 12 ? "12:00 PM" : `${h - 12}:00 PM`
+                        return (
+                          <option key={h} value={`${String(h).padStart(2, "0")}:00`} className="bg-gray-800 text-white">
+                            {label}
+                          </option>
+                        )
+                      })}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-white/70 text-sm mb-1.5 block">End Time</label>
+                    <select
+                      value={newEvent.endTime}
+                      onChange={(e) => setNewEvent({ ...newEvent, endTime: e.target.value })}
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
+                    >
+                      {Array.from({ length: 24 }, (_, i) => {
+                        const h = i
+                        const label = h === 0 ? "12:00 AM" : h < 12 ? `${h}:00 AM` : h === 12 ? "12:00 PM" : `${h - 12}:00 PM`
+                        return (
+                          <option key={h} value={`${String(h).padStart(2, "0")}:00`} className="bg-gray-800 text-white">
+                            {label}
+                          </option>
+                        )
+                      })}
+                    </select>
+                  </div>
+                </div>
+
+                {/* Day */}
+                <div>
+                  <label className="text-white/70 text-sm mb-1.5 block flex items-center gap-1.5">
+                    <Calendar className="h-3.5 w-3.5" />
+                    Day
+                  </label>
+                  <div className="flex gap-2">
+                    {weekDays.map((day, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setNewEvent({ ...newEvent, day: i + 1 })}
+                        className={`flex-1 py-2 rounded-lg text-xs font-medium transition-all ${
+                          newEvent.day === i + 1
+                            ? "bg-blue-500 text-white shadow-lg shadow-blue-500/30"
+                            : "bg-white/5 text-white/60 hover:bg-white/10"
+                        }`}
+                      >
+                        {day}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Color */}
+                <div>
+                  <label className="text-white/70 text-sm mb-1.5 block flex items-center gap-1.5">
+                    <Palette className="h-3.5 w-3.5" />
+                    Color
+                  </label>
+                  <div className="flex gap-2 flex-wrap">
+                    {eventColors.map((color) => (
+                      <button
+                        key={color.value}
+                        onClick={() => setNewEvent({ ...newEvent, color: color.value })}
+                        className={`w-8 h-8 rounded-full ${color.value} transition-all ${
+                          newEvent.color === color.value ? "ring-2 ring-white ring-offset-2 ring-offset-transparent scale-110" : "hover:scale-110"
+                        }`}
+                        title={color.name}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Attendees */}
+                <div>
+                  <label className="text-white/70 text-sm mb-1.5 block flex items-center gap-1.5">
+                    <Users className="h-3.5 w-3.5" />
+                    Attendees
+                  </label>
+                  <input
+                    type="text"
+                    value={newEvent.attendees}
+                    onChange={(e) => setNewEvent({ ...newEvent, attendees: e.target.value })}
+                    placeholder="Separate names with commas"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                {/* Organizer */}
+                <div>
+                  <label className="text-white/70 text-sm mb-1.5 block">Organizer</label>
+                  <input
+                    type="text"
+                    value={newEvent.organizer}
+                    onChange={(e) => setNewEvent({ ...newEvent, organizer: e.target.value })}
+                    placeholder="Organizer name"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
+              {/* Modal Footer */}
+              <div className="px-6 py-4 border-t border-white/10 flex items-center justify-between">
+                <button
+                  onClick={() => {
+                    setShowAddEvent(false)
+                    resetNewEvent()
+                  }}
+                  className="px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-lg text-sm font-medium transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleAddEvent}
+                  disabled={!newEvent.title.trim()}
+                  className={`px-6 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    newEvent.title.trim()
+                      ? "bg-blue-500 hover:bg-blue-600 text-white"
+                      : "bg-white/10 text-white/30 cursor-not-allowed"
+                  }`}
+                >
+                  Create Event
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
             </div>
           </div>
         )}
