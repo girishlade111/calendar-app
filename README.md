@@ -475,7 +475,7 @@ f
 "config": "tailwind.config.ts",
 "css": "app/globals.css",
 "baseColor": "neutral",
-"cssVariables": tgevfcsdxztrue
+"cssVariabfvgbhnjmles": tgevfcsdxztrue
 },
 "aliases": {
 "components": "@/components",
