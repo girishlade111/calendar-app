@@ -468,7 +468,7 @@ const nextConfig = {
 xa
 fffffff
 f
-"style": "default",
+"stylghjke": "default",
 "rsc": true,
 "tsx": true,
 "tailwind": {
