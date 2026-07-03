@@ -835,6 +835,465 @@ export default function Home() {
 
         {/* Floating Action Button - Removed */}
 
+        {/* Profile Panel */}
+        {showProfile && (
+          <div
+            ref={profileRef}
+            className="fixed top-20 right-8 w-[400px] max-h-[85vh] bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl overflow-hidden z-50"
+          >
+            {/* Profile Header */}
+            <div className="relative px-6 pt-8 pb-6 border-b border-white/10">
+              {/* Background pattern */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-600/20" />
+              <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "24px 24px" }} />
+              
+              <div className="relative flex flex-col items-center">
+                {/* Avatar */}
+                <div className="relative group">
+                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold shadow-xl">
+                    {profile.firstName[0]}{profile.lastName[0]}
+                  </div>
+                  <button className="absolute inset-0 rounded-full bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <Camera className="h-6 w-6 text-white" />
+                  </button>
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-400 rounded-full border-2 border-white/20" />
+                </div>
+                
+                {/* Name & Email */}
+                <h3 className="text-white text-xl font-bold mt-4">{profile.firstName} {profile.lastName}</h3>
+                <p className="text-white/60 text-sm mt-1">{profile.email}</p>
+                <p className="text-white/40 text-xs mt-1">{profile.jobTitle} at {profile.company}</p>
+                
+                {/* Quick Stats */}
+                <div className="flex gap-6 mt-4">
+                  <div className="text-center">
+                    <p className="text-white text-lg font-bold">156</p>
+                    <p className="text-white/50 text-xs">Events</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-white text-lg font-bold">42</p>
+                    <p className="text-white/50 text-xs">Meetings</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-white text-lg font-bold">8</p>
+                    <p className="text-white/50 text-xs">Groups</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Profile Tabs */}
+            <div className="flex border-b border-white/10 px-4">
+              {[
+                { id: "account", label: "Account", icon: User },
+                { id: "security", label: "Security", icon: Shield },
+                { id: "preferences", label: "Preferences", icon: Palette },
+                { id: "billing", label: "Billing", icon: CreditCard },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setProfileTab(tab.id as any)}
+                  className={`flex items-center gap-1.5 px-3 py-3 text-xs font-medium transition-colors border-b-2 ${
+                    profileTab === tab.id
+                      ? "border-blue-400 text-white"
+                      : "border-transparent text-white/50 hover:text-white/70"
+                  }`}
+                >
+                  <tab.icon className="h-3.5 w-3.5" />
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Profile Content */}
+            <div className="p-6 overflow-y-auto max-h-[50vh]">
+              {/* Account Tab */}
+              {profileTab === "account" && (
+                <div className="space-y-5">
+                  {isEditingProfile ? (
+                    <>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-white/70 text-xs mb-1.5 block">First Name</label>
+                          <input
+                            type="text"
+                            value={editedProfile.firstName}
+                            onChange={(e) => setEditedProfile({ ...editedProfile, firstName: e.target.value })}
+                            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-white/70 text-xs mb-1.5 block">Last Name</label>
+                          <input
+                            type="text"
+                            value={editedProfile.lastName}
+                            onChange={(e) => setEditedProfile({ ...editedProfile, lastName: e.target.value })}
+                            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-white/70 text-xs mb-1.5 block">Email</label>
+                        <input
+                          type="email"
+                          value={editedProfile.email}
+                          onChange={(e) => setEditedProfile({ ...editedProfile, email: e.target.value })}
+                          className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-white/70 text-xs mb-1.5 block">Phone</label>
+                        <input
+                          type="tel"
+                          value={editedProfile.phone}
+                          onChange={(e) => setEditedProfile({ ...editedProfile, phone: e.target.value })}
+                          className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-white/70 text-xs mb-1.5 block">Bio</label>
+                        <textarea
+                          value={editedProfile.bio}
+                          onChange={(e) => setEditedProfile({ ...editedProfile, bio: e.target.value })}
+                          rows={2}
+                          className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-white/70 text-xs mb-1.5 block">Location</label>
+                        <input
+                          type="text"
+                          value={editedProfile.location}
+                          onChange={(e) => setEditedProfile({ ...editedProfile, location: e.target.value })}
+                          className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-white/70 text-xs mb-1.5 block">Company</label>
+                          <input
+                            type="text"
+                            value={editedProfile.company}
+                            onChange={(e) => setEditedProfile({ ...editedProfile, company: e.target.value })}
+                            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-white/70 text-xs mb-1.5 block">Job Title</label>
+                          <input
+                            type="text"
+                            value={editedProfile.jobTitle}
+                            onChange={(e) => setEditedProfile({ ...editedProfile, jobTitle: e.target.value })}
+                            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-white/70 text-xs mb-1.5 block">Website</label>
+                        <input
+                          type="url"
+                          value={editedProfile.website}
+                          onChange={(e) => setEditedProfile({ ...editedProfile, website: e.target.value })}
+                          className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div className="flex gap-2 pt-2">
+                        <button
+                          onClick={() => {
+                            setProfile(editedProfile)
+                            setIsEditingProfile(false)
+                          }}
+                          className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-colors"
+                        >
+                          <Save className="h-4 w-4" />
+                          Save Changes
+                        </button>
+                        <button
+                          onClick={() => {
+                            setEditedProfile(profile)
+                            setIsEditingProfile(false)
+                          }}
+                          className="flex-1 py-2.5 bg-white/5 hover:bg-white/10 text-white rounded-lg text-sm font-medium transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-white font-medium">Personal Information</h4>
+                        <button
+                          onClick={() => setIsEditingProfile(true)}
+                          className="flex items-center gap-1.5 text-blue-400 hover:text-blue-300 text-sm transition-colors"
+                        >
+                          <Edit3 className="h-4 w-4" />
+                          Edit
+                        </button>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+                          <User className="h-5 w-5 text-white/50" />
+                          <div>
+                            <p className="text-white/50 text-xs">Full Name</p>
+                            <p className="text-white text-sm">{profile.firstName} {profile.lastName}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+                          <Mail className="h-5 w-5 text-white/50" />
+                          <div>
+                            <p className="text-white/50 text-xs">Email</p>
+                            <p className="text-white text-sm">{profile.email}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+                          <Phone className="h-5 w-5 text-white/50" />
+                          <div>
+                            <p className="text-white/50 text-xs">Phone</p>
+                            <p className="text-white text-sm">{profile.phone}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+                          <Globe className="h-5 w-5 text-white/50" />
+                          <div>
+                            <p className="text-white/50 text-xs">Location</p>
+                            <p className="text-white text-sm">{profile.location}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+                          <CreditCard className="h-5 w-5 text-white/50" />
+                          <div>
+                            <p className="text-white/50 text-xs">Company</p>
+                            <p className="text-white text-sm">{profile.company} - {profile.jobTitle}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
+
+              {/* Security Tab */}
+              {profileTab === "security" && (
+                <div className="space-y-5">
+                  <h4 className="text-white font-medium">Security Settings</h4>
+                  
+                  {/* Password */}
+                  <div className="p-4 bg-white/5 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <Key className="h-5 w-5 text-white/50" />
+                        <div>
+                          <p className="text-white text-sm font-medium">Password</p>
+                          <p className="text-white/50 text-xs">Last changed: {profile.security.lastPasswordChange}</p>
+                        </div>
+                      </div>
+                      <button className="px-3 py-1.5 bg-white/10 hover:bg-white/15 text-white rounded-lg text-xs font-medium transition-colors">
+                        Change
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Two-Factor Authentication */}
+                  <div className="p-4 bg-white/5 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <Shield className="h-5 w-5 text-white/50" />
+                        <div>
+                          <p className="text-white text-sm font-medium">Two-Factor Auth</p>
+                          <p className="text-white/50 text-xs">{profile.security.twoFactor ? "Enabled" : "Disabled"}</p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => setProfile({ ...profile, security: { ...profile.security, twoFactor: !profile.security.twoFactor } })}
+                        className={`w-12 h-6 rounded-full transition-colors relative ${profile.security.twoFactor ? "bg-green-500" : "bg-white/20"}`}
+                      >
+                        <div className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-transform ${profile.security.twoFactor ? "translate-x-6" : "translate-x-0.5"}`} />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Active Sessions */}
+                  <div className="p-4 bg-white/5 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <Monitor className="h-5 w-5 text-white/50" />
+                        <div>
+                          <p className="text-white text-sm font-medium">Active Sessions</p>
+                          <p className="text-white/50 text-xs">{profile.security.loginSessions} devices logged in</p>
+                        </div>
+                      </div>
+                      <button className="px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg text-xs font-medium transition-colors">
+                        Sign Out All
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Login History */}
+                  <div>
+                    <h5 className="text-white/70 text-sm font-medium mb-3">Recent Activity</h5>
+                    <div className="space-y-2">
+                      {[
+                        { device: "MacBook Pro", location: "Mumbai, India", time: "2 hours ago", current: true },
+                        { device: "iPhone 15", location: "Mumbai, India", time: "1 day ago", current: false },
+                        { device: "Chrome on Windows", location: "Mumbai, India", time: "3 days ago", current: false },
+                      ].map((session, i) => (
+                        <div key={i} className="flex items-center justify-between p-2 bg-white/5 rounded-lg">
+                          <div className="flex items-center gap-2">
+                            <Monitor className="h-4 w-4 text-white/40" />
+                            <div>
+                              <p className="text-white text-xs">{session.device}</p>
+                              <p className="text-white/40 text-xs">{session.location}</p>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-white/50 text-xs">{session.time}</p>
+                            {session.current && (
+                              <span className="text-green-400 text-xs">Current</span>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Preferences Tab */}
+              {profileTab === "preferences" && (
+                <div className="space-y-5">
+                  <h4 className="text-white font-medium">Notification Preferences</h4>
+                  
+                  {[
+                    { key: "email", label: "Email Notifications", desc: "Receive updates via email", icon: Mail },
+                    { key: "push", label: "Push Notifications", desc: "Browser push notifications", icon: Bell },
+                    { key: "sms", label: "SMS Notifications", desc: "Text message alerts", icon: Phone },
+                  ].map((item) => (
+                    <div key={item.key} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <item.icon className="h-5 w-5 text-white/50" />
+                        <div>
+                          <p className="text-white text-sm">{item.label}</p>
+                          <p className="text-white/50 text-xs">{item.desc}</p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => setProfile({
+                          ...profile,
+                          notifications: { ...profile.notifications, [item.key]: !profile.notifications[item.key as keyof typeof profile.notifications] }
+                        })}
+                        className={`w-12 h-6 rounded-full transition-colors relative ${profile.notifications[item.key as keyof typeof profile.notifications] ? "bg-blue-500" : "bg-white/20"}`}
+                      >
+                        <div className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-transform ${profile.notifications[item.key as keyof typeof profile.notifications] ? "translate-x-6" : "translate-x-0.5"}`} />
+                      </button>
+                    </div>
+                  ))}
+
+                  <h4 className="text-white font-medium pt-2">Calendar Preferences</h4>
+                  
+                  <div className="space-y-2">
+                    <button className="w-full flex items-center justify-between p-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors">
+                      <div className="flex items-center gap-3">
+                        <Palette className="h-5 w-5 text-white/50" />
+                        <span className="text-white text-sm">Calendar Colors</span>
+                      </div>
+                      <ChevronRight className="h-4 w-4 text-white/30" />
+                    </button>
+                    <button className="w-full flex items-center justify-between p-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors">
+                      <div className="flex items-center gap-3">
+                        <Clock className="h-5 w-5 text-white/50" />
+                        <span className="text-white text-sm">Default Reminder Time</span>
+                      </div>
+                      <ChevronRight className="h-4 w-4 text-white/30" />
+                    </button>
+                    <button className="w-full flex items-center justify-between p-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors">
+                      <div className="flex items-center gap-3">
+                        <Globe className="h-5 w-5 text-white/50" />
+                        <span className="text-white text-sm">Import/Export Calendar</span>
+                      </div>
+                      <ChevronRight className="h-4 w-4 text-white/30" />
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Billing Tab */}
+              {profileTab === "billing" && (
+                <div className="space-y-5">
+                  {/* Current Plan */}
+                  <div className="p-4 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-lg border border-blue-500/30">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-white font-medium">Pro Plan</p>
+                        <p className="text-white/60 text-sm mt-1">Unlimited events & storage</p>
+                      </div>
+                      <span className="px-3 py-1 bg-blue-500 text-white text-xs font-medium rounded-full">Active</span>
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-white/10">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-white/60">Next billing date</span>
+                        <span className="text-white">Feb 15, 2026</span>
+                      </div>
+                      <div className="flex justify-between text-sm mt-2">
+                        <span className="text-white/60">Amount</span>
+                        <span className="text-white">$9.99/month</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Payment Method */}
+                  <div className="p-4 bg-white/5 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <CreditCard className="h-5 w-5 text-white/50" />
+                        <div>
+                          <p className="text-white text-sm font-medium">Payment Method</p>
+                          <p className="text-white/50 text-xs">Visa ending in 4242</p>
+                        </div>
+                      </div>
+                      <button className="px-3 py-1.5 bg-white/10 hover:bg-white/15 text-white rounded-lg text-xs font-medium transition-colors">
+                        Update
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Billing History */}
+                  <div>
+                    <h5 className="text-white/70 text-sm font-medium mb-3">Billing History</h5>
+                    <div className="space-y-2">
+                      {[
+                        { date: "Jan 15, 2026", amount: "$9.99", status: "Paid" },
+                        { date: "Dec 15, 2025", amount: "$9.99", status: "Paid" },
+                        { date: "Nov 15, 2025", amount: "$9.99", status: "Paid" },
+                      ].map((invoice, i) => (
+                        <div key={i} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+                          <div>
+                            <p className="text-white text-sm">{invoice.date}</p>
+                            <p className="text-white/50 text-xs">Monthly subscription</p>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-white text-sm">{invoice.amount}</p>
+                            <p className="text-green-400 text-xs">{invoice.status}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Profile Footer */}
+            <div className="px-6 py-4 border-t border-white/10">
+              <button className="w-full flex items-center justify-center gap-2 py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-lg text-sm font-medium transition-colors">
+                <LogOut className="h-4 w-4" />
+                Sign Out
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Settings Panel */}
         {showSettings && (
           <div
