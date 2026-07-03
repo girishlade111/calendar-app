@@ -593,7 +593,7 @@ hover:translate-y-[-2px] hover:shadow-lg
 | Command                 | Description                                         | Usage                |
 | ----------------------- | --------------------------------------------------- | -------------------- |
 | `pnpmhjhye dev`         | Start qswde345tyNext.jtrefdwsqas development server | Development          |
-| `pnp23ER4T5GHYUm build` | CreatuhygtrfexswaZ production build                 | Producthtgrfvcdazion |
+| `pnp23ER4T5GHYUm build` | Creatuhyg3er4t56ytrfexswaZ production build         | Producthtgrfvcdazion |
 | `pnpm staTGRFVXSAZrt`   | Start production server                             | Production           |
 | `pnpmWSE3R4TYUJ lint`   | Run ESLint checks                                   | Quality              |
 
