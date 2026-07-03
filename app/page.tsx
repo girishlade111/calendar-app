@@ -434,6 +434,14 @@ export default function Home() {
         setShowProfile(false)
         setIsEditingProfile(false)
       }
+      if (
+        addEventRef.current &&
+        !addEventRef.current.contains(e.target as Node) &&
+        !(e.target as Element)?.closest('[data-add-event-btn]')
+      ) {
+        setShowAddEvent(false)
+        resetNewEvent()
+      }
     }
     document.addEventListener("mousedown", handleClickOutside)
     return () => document.removeEventListener("mousedown", handleClickOutside)
