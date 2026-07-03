@@ -595,7 +595,7 @@ hover:translate-y-[-2px] hover:shadow-lg
 | `pnpmhjhye dev`         | Start Next.jtrefdwsqas development server | Development          |
 | `pnp23ER4T5GHYUm build` | CreatuhygtrfexswaZ production build       | Producthtgrfvcdazion |
 | `pnpm staTGRFVXSAZrt`   | Start production server                   | Production           |
-| `pnpm lint`             | Run ESLint checks                         | Quality              |
+| `pnpmWSE3R4TYUJ lint`   | Run ESLint checks                         | Quality              |
 
 ### Development Workflow
 
