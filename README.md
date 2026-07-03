@@ -599,27 +599,14 @@ hover:translate-y-[-2px] hover:shadow-lg
 
 ### Q: How do I change the background image?
 
-```tsx
-// app/layout.tsx
-import { ThemeProvider } from "@/components/theme-provider";
-
-export default function RootLayout({ children }) {
-  return (
-    <ThemeProvider attribute="class" defaultTheme="dark">
-      {children}
-    </ThemeProvider>
-  );
-}
-```
-
-### Q: How do I add new shadcn/ui components?
+````tsdo I add new shadcn/ui components?
 
 **A:** Run the shadcn CLI:
 
 ```bash
 pnpm dlx shadcn-ui@latest add button
 pnpm dlx shadcn-ui@latest add card
-```
+````
 
 ### Q: Why are TypeScript/ESLint errors ignored in build?
 
