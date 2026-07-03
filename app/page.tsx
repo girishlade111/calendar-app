@@ -502,7 +502,13 @@ export default function Home() {
               </div>
             )}
           </div>
-          <Settings className="h-6 w-6 text-white drop-shadow-md" />
+          <button
+            data-settings-btn
+            onClick={() => setShowSettings(!showSettings)}
+            className={`p-2 rounded-full transition-colors ${showSettings ? "bg-white/20" : "hover:bg-white/10"}`}
+          >
+            <Settings className="h-6 w-6 text-white drop-shadow-md" />
+          </button>
           <div className="h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold shadow-md">
             U
           </div>
