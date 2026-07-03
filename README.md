@@ -599,16 +599,6 @@ hover:translate-y-[-2px] hover:shadow-lg
 
 ### Q: How do I change the background image?
 
-**A:** Update the `src` prop of the `<Image>` component in `app/page.tsx`:
-
-```tsx
-<Image src="YOUR_IMAGE_URL" ... />
-```
-
-### Q: How do I enable dark mode?
-
-**A:** Wrap your layout with `ThemeProvider`:
-
 ```tsx
 // app/layout.tsx
 import { ThemeProvider } from "@/components/theme-provider";
