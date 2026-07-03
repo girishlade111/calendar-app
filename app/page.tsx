@@ -707,7 +707,11 @@ export default function Home() {
           </div>
 
           {/* New position for the big plus button */}
-          <button className="mt-6 flex items-center justify-center gap-2 rounded-full bg-blue-500 p-4 text-white w-14 h-14 self-start">
+          <button
+            data-add-event-btn
+            onClick={() => setShowAddEvent(!showAddEvent)}
+            className="mt-6 flex items-center justify-center gap-2 rounded-full bg-blue-500 p-4 text-white w-14 h-14 self-start hover:bg-blue-600 transition-colors hover:scale-105"
+          >
             <Plus className="h-6 w-6" />
           </button>
         </div>
