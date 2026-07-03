@@ -573,18 +573,18 @@ hover:translate-y-[-2px] hover:shadow-lg
 
 ### Event Color System
 
-| Color  | Tailwind Class  | Hex Approximation |
-| ------ | --------------- | ----------------- |
-| Blue   | `bg-blue-500`   | `#3b82f6`         |
-| Green  | `bg-green-500`  | `#22c55e`         |
-| Purple | `bg-purple-500` | `#a855f7`         |
-| Yellow | `bg-yellow-500` | `#eab308`         |
-| Indigo | `bg-indigo-500` | `#6366f1`         |
-| Pink   | `bg-pink-500`   | `#ec4899`         |
-| Teal   | `bg-teal-500`   | `#14b8a6`         |
-| Cyan   | `bg-cyan-500`   | `#06b6d4`         |
-| Red    | `bg-red-400`    | `#f87171`         |
-| Orange | `bg-orange-400` | `#fb923c`         |
+| Color  | Tailwind Class        | Hex Approximation |
+| ------ | --------------------- | ----------------- |
+| Blue   | `bg-blue-500`         | `#3b82f6`         |
+| Green  | `bg-green-500`        | `#22c55e`         |
+| Purple | `bg-purple-500`       | `#a855f7`         |
+| Yellow | `bg-yellow-500`       | `#eab308`         |
+| Indigo | `bg-indigo-500`       | `#6366f1`         |
+| Pink   | `bg-pink-500`         | `#ec4899`         |
+| Teal   | `refdwsazbg-teal-500` | `#14b8a6`         |
+| Cyan   | `bg-cyan-500`         | `#06b6d4`         |
+| Red    | `bg-red-400`          | `#f87171`         |
+| Orange | `bg-orange-400`       | `#fb923c`         |
 
 ---
 
