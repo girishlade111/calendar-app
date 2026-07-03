@@ -601,13 +601,7 @@ hover:translate-y-[-2px] hover:shadow-lg
 
 ````
 
-**Build Settings:**
-
-- Framework: Next.js
-- Build Command: `pnpm build`
-- Output Directory: `.next`
-
-### Other Platforms
+**s
 
 **Netlify:**
 
