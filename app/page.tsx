@@ -522,6 +522,23 @@ export default function Home() {
   }
 
   return (
-    <div className="test"><h1>Test</h1></div>
+    <div className="relative min-h-screen w-full overflow-hidden">
+      {/* Background Image */}
+      <Image
+        src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop"
+        alt="Beautiful mountain landscape"
+        fill
+        className="object-cover"
+        priority
+      />
+
+      {/* Navigation */}
+      <header
+        className={`absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-8 py-6 opacity-0 ${isLoaded ? "animate-fade-in" : ""}`}
+        style={{ animationDelay: "0.2s" }}
+      >
+        <div className="flex items-center gap-4">
+      )
+    </div>
   )
 }
