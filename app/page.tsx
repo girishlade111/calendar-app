@@ -604,7 +604,7 @@ export default function Home() {
                             {event.title}
                           </div>
                           <div className="text-white/60 text-xs truncate">
-                            {weekDays[event.day - 1]}, {weekDates[event.day - 1]} {currentMonth} ┬╖ {event.startTime} - {event.endTime}
+                            {weekDays[event.day - 1]}, {weekDates[event.day - 1]} {currentMonth} â”¬â•– {event.startTime} - {event.endTime}
                           </div>
                         </div>
                         <MapPin className="h-3 w-3 text-white/40 flex-shrink-0" />
