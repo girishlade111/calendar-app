@@ -55,15 +55,15 @@
 
 ### Built With
 
-| Layer | Technology |
-|-------|------------|
-| **Framework** | Next.js 15.2 (App Router) |
-| **Language** | TypeScript 5.0 (Strict mode) |
-| **UI Library** | React 19 |
-| **Styling** | Tailwind CSS 3.4 + shadcn/ui |
-| **Icons** | Lucide React |
-| **Theme** | next-themes (dark/light mode support) |
-| **Package Manager** | pnpm 11.8 |
+| Layer               | Technology                            |
+| ------------------- | ------------------------------------- |
+| **Framework**       | Next.js 15.2 (App Router)             |
+| **Language**        | TypeScript 5.0 (Strict mode)          |
+| **UI Library**      | React 19                              |
+| **Styling**         | Tailwind CSS 3.4 + shadcn/ui          |
+| **Icons**           | Lucide React                          |
+| **Theme**           | next-themes (dark/light mode support) |
+| **Package Manager** | pnpm 11.8                             |
 
 ---
 
@@ -72,6 +72,7 @@
 > The app features a full-screen mountain landscape background with glassmorphism UI panels overlaid on top.
 
 **Main Calendar View:**
+
 - Header: Search bar, settings icon, user avatar
 - Sidebar: Create button, mini calendar, calendar categories
 - Content: Weekly view with color-coded events
@@ -83,71 +84,72 @@
 
 ### Core
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `next` | 15.2.4 | React framework with App Router |
-| `react` | 19.0.0 | UI library |
-| `react-dom` | 19.0.0 | React DOM renderer |
-| `typescript` | 5.0.2 | Type-safe JavaScript |
+| Package      | Version | Purpose                         |
+| ------------ | ------- | ------------------------------- |
+| `next`       | 15.2.4  | React framework with App Router |
+| `react`      | 19.0.0  | UI library                      |
+| `react-dom`  | 19.0.0  | React DOM renderer              |
+| `typescript` | 5.0.2   | Type-safe JavaScript            |
 
 ### UI Components (shadcn/ui)
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `@radix-ui/react-accordion` | 1.2.2 | Collapsible content sections |
-| `@radix-ui/react-alert-dialog` | 1.1.4 | Modal confirmation dialogs |
-| `@radix-ui/react-avatar` | 1.1.2 | User avatar component |
-| `@radix-ui/react-checkbox` | 1.1.3 | Checkbox inputs |
-| `@radix-ui/react-dialog` | 1.1.4 | Modal dialogs |
-| `@radix-ui/react-dropdown-menu` | 2.1.4 | Dropdown menus |
-| `@radix-ui/react-label` | 2.1.1 | Form labels |
-| `@radix-ui/react-popover` | 1.1.4 | Popover tooltips |
-| `@radix-ui/react-select` | 2.1.4 | Select dropdowns |
-| `@radix-ui/react-tabs` | 1.1.2 | Tabbed interfaces |
-| `@radix-ui/react-toast` | 1.2.4 | Toast notifications |
-| `@radix-ui/react-tooltip` | 1.1.6 | Tooltips |
+| Package                         | Version | Purpose                      |
+| ------------------------------- | ------- | ---------------------------- |
+| `@radix-ui/react-accordion`     | 1.2.2   | Collapsible content sections |
+| `@radix-ui/react-alert-dialog`  | 1.1.4   | Modal confirmation dialogs   |
+| `@radix-ui/react-avatar`        | 1.1.2   | User avatar component        |
+| `@radix-ui/react-checkbox`      | 1.1.3   | Checkbox inputs              |
+| `@radix-ui/react-dialog`        | 1.1.4   | Modal dialogs                |
+| `@radix-ui/react-dropdown-menu` | 2.1.4   | Dropdown menus               |
+| `@radix-ui/react-label`         | 2.1.1   | Form labels                  |
+| `@radix-ui/react-popover`       | 1.1.4   | Popover tooltips             |
+| `@radix-ui/react-select`        | 2.1.4   | Select dropdowns             |
+| `@radix-ui/react-tabs`          | 1.1.2   | Tabbed interfaces            |
+| `@radix-ui/react-toast`         | 1.2.4   | Toast notifications          |
+| `@radix-ui/react-tooltip`       | 1.1.6   | Tooltips                     |
 
 ### Styling
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `tailwindcss` | 3.4.17 | Utility-first CSS framework |
-| `tailwindcss-animate` | 1.0.7 | Animation utilities |
-| `tailwind-merge` | 2.5.5 | Merge Tailwind classes |
-| `class-variance-authority` | 0.7.1 | Component variant management |
-| `clsx` | 2.1.1 | Conditional class names |
-| `autoprefixer` | 10.4.20 | CSS vendor prefixes |
-| `postcss` | 8.5.0 | CSS transformation |
+| Package                    | Version | Purpose                      |
+| -------------------------- | ------- | ---------------------------- |
+| `tailwindcss`              | 3.4.17  | Utility-first CSS framework  |
+| `tailwindcss-animate`      | 1.0.7   | Animation utilities          |
+| `tailwind-merge`           | 2.5.5   | Merge Tailwind classes       |
+| `class-variance-authority` | 0.7.1   | Component variant management |
+| `clsx`                     | 2.1.1   | Conditional class names      |
+| `autoprefixer`             | 10.4.20 | CSS vendor prefixes          |
+| `postcss`                  | 8.5.0   | CSS transformation           |
 
 ### Utilities
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `lucide-react` | 0.454.0 | Icon library |
-| `date-fns` | 4.1.0 | Date manipulation |
-| `next-themes` | 0.4.4 | Theme management |
-| `zod` | 3.24.1 | Schema validation |
-| `react-hook-form` | 7.54.1 | Form management |
-| `@hookform/resolvers` | 3.9.1 | Form validation resolvers |
+| Package               | Version | Purpose                   |
+| --------------------- | ------- | ------------------------- |
+| `lucide-react`        | 0.454.0 | Icon library              |
+| `date-fns`            | 4.1.0   | Date manipulation         |
+| `next-themes`         | 0.4.4   | Theme management          |
+| `zod`                 | 3.24.1  | Schema validation         |
+| `react-hook-form`     | 7.54.1  | Form management           |
+| `@hookform/resolvers` | 3.9.1   | Form validation resolvers |
 
 ### Additional Components
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `cmdk` | 1.0.4 | Command palette |
-| `embla-carousel-react` | 8.5.1 | Carousel component |
-| `input-otp` | 1.4.1 | OTP input fields |
-| `react-day-picker` | 9.8.0 | Date picker |
-| `react-resizable-panels` | 2.1.7 | Resizable panels |
-| `recharts` | 2.15.0 | Chart library |
-| `sonner` | 1.7.1 | Toast notifications |
-| `vaul` | 0.9.6 | Drawer component |
+| Package                  | Version | Purpose             |
+| ------------------------ | ------- | ------------------- |
+| `cmdk`                   | 1.0.4   | Command palette     |
+| `embla-carousel-react`   | 8.5.1   | Carousel component  |
+| `input-otp`              | 1.4.1   | OTP input fields    |
+| `react-day-picker`       | 9.8.0   | Date picker         |
+| `react-resizable-panels` | 2.1.7   | Resizable panels    |
+| `recharts`               | 2.15.0  | Chart library       |
+| `sonner`                 | 1.7.1   | Toast notifications |
+| `vaul`                   | 0.9.6   | Drawer component    |
 
 ---
 
 ## ✨ Features
 
 ### 1. Weekly Calendar View
+
 - Full week display from Sunday to Saturday
 - Time slots from 8:00 AM to 4:00 PM
 - Color-coded events positioned by time
@@ -155,6 +157,7 @@
 - Event click to view full details
 
 ### 2. AI Assistant Popup
+
 - Appears automatically after 3 seconds
 - Typing animation effect (50ms per character)
 - Contextual suggestion: "Shall I play some Hans Zimmer essentials?"
@@ -163,18 +166,21 @@
 - Dismissible with X button
 
 ### 3. Mini Calendar
+
 - Sidebar month view
 - Navigation arrows for month switching
 - Current date highlighted
 - 7-column grid layout
 
 ### 4. Multiple Calendar Categories
+
 - **My Calendar** (Blue) — Personal events
 - **Work** (Green) — Professional meetings
 - **Personal** (Purple) — Private appointments
 - **Family** (Orange) — Family events
 
 ### 5. Event Details Modal
+
 - Full-screen overlay with backdrop blur
 - Event title, time range, location
 - Attendee list with icons
@@ -183,17 +189,20 @@
 - Close button
 
 ### 6. View Switching
+
 - **Day** — Single day view
 - **Week** — Full week view (default)
 - **Month** — Monthly overview
 
 ### 7. Navigation
+
 - Today button for quick navigation
 - Previous/Next arrows for date switching
 - Current date display
 - Search functionality
 
 ### 8. Glassmorphism Design
+
 - `backdrop-blur-lg` on all panels
 - `bg-white/10` translucent backgrounds
 - `border-white/20` soft borders
@@ -244,35 +253,35 @@ Events are positioned absolutely using time-based calculations:
 
 ```typescript
 const calculateEventStyle = (startTime, endTime) => {
-  const start = parseInt(startTime.split(":")[0]) 
-              + parseInt(startTime.split(":")[1]) / 60
-  const end = parseInt(endTime.split(":")[0]) 
-            + parseInt(endTime.split(":")[1]) / 60
-  const top = (start - 8) * 80      // 80px per hour
-  const height = (end - start) * 80
-  return { top: `${top}px`, height: `${height}px` }
-}
+  const start =
+    parseInt(startTime.split(":")[0]) + parseInt(startTime.split(":")[1]) / 60;
+  const end =
+    parseInt(endTime.split(":")[0]) + parseInt(endTime.split(":")[1]) / 60;
+  const top = (start - 8) * 80; // 80px per hour
+  const height = (end - start) * 80;
+  return { top: `${top}px`, height: `${height}px` };
+};
 ```
 
 ### Sample Events Data
 
-| ID | Title | Time | Day | Color |
-|----|-------|------|-----|-------|
-| 1 | Team Meeting | 09:00-10:00 | Mon | Blue |
-| 2 | Lunch with Sarah | 12:30-13:30 | Mon | Green |
-| 3 | Project Review | 14:00-15:30 | Wed | Purple |
-| 4 | Client Call | 10:00-11:00 | Tue | Yellow |
-| 5 | Team Brainstorm | 13:00-14:30 | Thu | Indigo |
-| 6 | Product Demo | 11:00-12:00 | Fri | Pink |
-| 7 | Marketing Meeting | 13:00-14:00 | Sat | Teal |
-| 8 | Code Review | 15:00-16:00 | Sun | Cyan |
-| 9 | Morning Standup | 08:30-09:30 | Tue | Blue |
-| 10 | Design Review | 14:30-15:45 | Fri | Purple |
-| 11 | Investor Meeting | 10:30-12:00 | Sun | Red |
-| 12 | Team Training | 09:30-11:30 | Thu | Green |
-| 13 | Budget Review | 13:30-15:00 | Wed | Yellow |
-| 14 | Client Presentation | 11:00-12:30 | Sat | Orange |
-| 15 | Product Planning | 14:00-15:30 | Mon | Pink |
+| ID  | Title               | Time        | Day | Color  |
+| --- | ------------------- | ----------- | --- | ------ |
+| 1   | Team Meeting        | 09:00-10:00 | Mon | Blue   |
+| 2   | Lunch with Sarah    | 12:30-13:30 | Mon | Green  |
+| 3   | Project Review      | 14:00-15:30 | Wed | Purple |
+| 4   | Client Call         | 10:00-11:00 | Tue | Yellow |
+| 5   | Team Brainstorm     | 13:00-14:30 | Thu | Indigo |
+| 6   | Product Demo        | 11:00-12:00 | Fri | Pink   |
+| 7   | Marketing Meeting   | 13:00-14:00 | Sat | Teal   |
+| 8   | Code Review         | 15:00-16:00 | Sun | Cyan   |
+| 9   | Morning Standup     | 08:30-09:30 | Tue | Blue   |
+| 10  | Design Review       | 14:30-15:45 | Fri | Purple |
+| 11  | Investor Meeting    | 10:30-12:00 | Sun | Red    |
+| 12  | Team Training       | 09:30-11:30 | Thu | Green  |
+| 13  | Budget Review       | 13:30-15:00 | Wed | Yellow |
+| 14  | Client Presentation | 11:00-12:30 | Sat | Orange |
+| 15  | Product Planning    | 14:00-15:30 | Mon | Pink   |
 
 ---
 
@@ -366,22 +375,26 @@ calendar-app/
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/girishlade111/calendar-app.git
    cd calendar-app
    ```
 
 2. **Install dependencies**
+
    ```bash
    pnpm install
    ```
 
 3. **Approve builds** (if prompted)
+
    ```bash
    pnpm approve-builds sharp
    ```
 
 4. **Start development server**
+
    ```bash
    pnpm dev
    ```
@@ -406,32 +419,33 @@ git clone https://github.com/girishlade111/calendar-app.git && cd calendar-app &
 ```javascript
 const nextConfig = {
   eslint: {
-    ignoreDuringBuilds: true,        // Skip ESLint during builds
+    ignoreDuringBuilds: true, // Skip ESLint during builds
   },
   typescript: {
-    ignoreBuildErrors: true,          // Skip TypeScript errors during builds
+    ignoreBuildErrors: true, // Skip TypeScript errors during builds
   },
   images: {
-    unoptimized: true,                // Disable image optimization (for static export)
+    unoptimized: true, // Disable image optimization (for static export)
   },
-}
+};
 ```
 
 ### TypeScript Config (`tsconfig.json`)
 
-| Option | Value | Purpose |
-|--------|-------|---------|
-| `target` | ES6 | JavaScript output target |
-| `strict` | true | Enable all strict type checks |
-| `module` | esnext | Module system |
-| `moduleResolution` | bundler | Module resolution strategy |
-| `jsx` | preserve | Keep JSX for Next.js processing |
-| `incremental` | true | Enable incremental compilation |
-| `paths.@/*` | `./*` | Path alias for root imports |
+| Option             | Value    | Purpose                         |
+| ------------------ | -------- | ------------------------------- |
+| `target`           | ES6      | JavaScript output target        |
+| `strict`           | true     | Enable all strict type checks   |
+| `module`           | esnext   | Module system                   |
+| `moduleResolution` | bundler  | Module resolution strategy      |
+| `jsx`              | preserve | Keep JSX for Next.js processing |
+| `incremental`      | true     | Enable incremental compilation  |
+| `paths.@/*`        | `./*`    | Path alias for root imports     |
 
 ### Tailwind Config (`tailwind.config.js`)
 
 **Custom Colors:**
+
 - `border`, `input`, `ring` — Form element colors
 - `background`, `foreground` — Page colors
 - `primary`, `secondary` — Brand colors
@@ -440,11 +454,13 @@ const nextConfig = {
 - `popover`, `card` — Overlay colors
 
 **Custom Animations:**
+
 - `accordion-down` — Expand accordion content
 - `accordion-up` — Collapse accordion content
 - `fade-in` — 0.5s opacity fade-in
 
 **Plugins:**
+
 - `tailwindcss-animate` — Animation utilities
 
 ### shadcn/ui Config (`components.json`)
@@ -477,11 +493,11 @@ const nextConfig = {
 ### Utility Function (`lib/utils.ts`)
 
 ```typescript
-import { clsx, type ClassValue } from 'clsx'
-import { twMerge } from 'tailwind-merge'
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 ```
 
@@ -533,7 +549,7 @@ bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl
 bg-white/10 backdrop-blur-sm border border-white/20
 
 /* AI Popup */
-bg-gradient-to-br from-blue-400/30 via-blue-500/30 to-blue-600/30 
+bg-gradient-to-br from-blue-400/30 via-blue-500/30 to-blue-600/30
 backdrop-blur-lg border border-blue-300/30
 ```
 
@@ -554,29 +570,29 @@ hover:translate-y-[-2px] hover:shadow-lg
 
 ### Event Color System
 
-| Color | Tailwind Class | Hex Approximation |
-|-------|----------------|-------------------|
-| Blue | `bg-blue-500` | `#3b82f6` |
-| Green | `bg-green-500` | `#22c55e` |
-| Purple | `bg-purple-500` | `#a855f7` |
-| Yellow | `bg-yellow-500` | `#eab308` |
-| Indigo | `bg-indigo-500` | `#6366f1` |
-| Pink | `bg-pink-500` | `#ec4899` |
-| Teal | `bg-teal-500` | `#14b8a6` |
-| Cyan | `bg-cyan-500` | `#06b6d4` |
-| Red | `bg-red-400` | `#f87171` |
-| Orange | `bg-orange-400` | `#fb923c` |
+| Color  | Tailwind Class  | Hex Approximation |
+| ------ | --------------- | ----------------- |
+| Blue   | `bg-blue-500`   | `#3b82f6`         |
+| Green  | `bg-green-500`  | `#22c55e`         |
+| Purple | `bg-purple-500` | `#a855f7`         |
+| Yellow | `bg-yellow-500` | `#eab308`         |
+| Indigo | `bg-indigo-500` | `#6366f1`         |
+| Pink   | `bg-pink-500`   | `#ec4899`         |
+| Teal   | `bg-teal-500`   | `#14b8a6`         |
+| Cyan   | `bg-cyan-500`   | `#06b6d4`         |
+| Red    | `bg-red-400`    | `#f87171`         |
+| Orange | `bg-orange-400` | `#fb923c`         |
 
 ---
 
 ## 📜 Scripts
 
-| Command | Description | Usage |
-|---------|-------------|-------|
-| `pnpm dev` | Start Next.js development server | Development |
-| `pnpm build` | Create production build | Production |
-| `pnpm start` | Start production server | Production |
-| `pnpm lint` | Run ESLint checks | Quality |
+| Command      | Description                      | Usage       |
+| ------------ | -------------------------------- | ----------- |
+| `pnpm dev`   | Start Next.js development server | Development |
+| `pnpm build` | Create production build          | Production  |
+| `pnpm start` | Start production server          | Production  |
+| `pnpm lint`  | Run ESLint checks                | Quality     |
 
 ### Development Workflow
 
@@ -602,9 +618,11 @@ pnpm lint
 3. Deploy automatically
 
 **Environment Variables:**
+
 - No environment variables required for basic functionality
 
 **Build Settings:**
+
 - Framework: Next.js
 - Build Command: `pnpm build`
 - Output Directory: `.next`
@@ -612,6 +630,7 @@ pnpm lint
 ### Other Platforms
 
 **Netlify:**
+
 ```bash
 # Build command
 pnpm build
@@ -621,6 +640,7 @@ pnpm build
 ```
 
 **Docker:**
+
 ```dockerfile
 FROM node:18-alpine
 RUN npm install -g pnpm
@@ -665,10 +685,13 @@ CMD ["pnpm", "start"]
 ## ❓ FAQ
 
 ### Q: Why is the dev server slow to start?
+
 **A:** First run requires downloading 275 packages. Subsequent starts are faster.
 
 ### Q: How do I add new events?
+
 **A:** Edit the `events` array in `app/page.tsx`. Each event requires:
+
 ```typescript
 {
   id: number,
@@ -685,34 +708,41 @@ CMD ["pnpm", "start"]
 ```
 
 ### Q: How do I change the background image?
+
 **A:** Update the `src` prop of the `<Image>` component in `app/page.tsx`:
+
 ```tsx
 <Image src="YOUR_IMAGE_URL" ... />
 ```
 
 ### Q: How do I enable dark mode?
+
 **A:** Wrap your layout with `ThemeProvider`:
+
 ```tsx
 // app/layout.tsx
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider } from "@/components/theme-provider";
 
 export default function RootLayout({ children }) {
   return (
     <ThemeProvider attribute="class" defaultTheme="dark">
       {children}
     </ThemeProvider>
-  )
+  );
 }
 ```
 
 ### Q: How do I add new shadcn/ui components?
+
 **A:** Run the shadcn CLI:
+
 ```bash
 pnpm dlx shadcn-ui@latest add button
 pnpm dlx shadcn-ui@latest add card
 ```
 
 ### Q: Why are TypeScript/ESLint errors ignored in build?
+
 **A:** The `next.config.mjs` has `ignoreDuringBuilds: true` for both. Remove these for stricter builds.
 
 ---
