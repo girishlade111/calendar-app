@@ -633,7 +633,13 @@ export default function Home() {
         style={{ animationDelay: "0.2s" }}
       >
         <div className="flex items-center gap-4">
-          <Menu className="h-6 w-6 text-white" />
+          <button
+            data-sidebar-btn
+            onClick={() => setShowSidebar(!showSidebar)}
+            className="p-2 rounded-xl hover:bg-white/10 text-white/80 hover:text-white transition-colors"
+          >
+            <Menu className="h-6 w-6" />
+          </button>
           <span className="text-2xl font-semibold text-white drop-shadow-lg">Calendar</span>
         </div>
 
