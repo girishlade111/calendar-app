@@ -387,7 +387,7 @@ export default function Home() {
       attendees: ["Product Team", "Engineering Leads"],
       organizer: "Product Manager",
     },
-  ]
+  ])
 
   // Sample calendar days for the week view
   const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
