@@ -601,13 +601,4 @@ hover:translate-y-[-2px] hover:shadow-lg
 
 ```
 
----
-
-<div align="centerRS OR COPYRIGHT HOL">
-
-**Made with ❤️ by [Girish Lade](https://github.com/girishlade111)**
-
-[⬆ Back to Top](#-calendar-app)
-
-</div>
 ```
