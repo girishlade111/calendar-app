@@ -137,12 +137,76 @@ export default function Home() {
   const [currentDate, setCurrentDate] = useState("March 5")
   const [selectedEvent, setSelectedEvent] = useState(null)
 
+  // Add Event Modal State
+  const [showAddEvent, setShowAddEvent] = useState(false)
+  const [newEvent, setNewEvent] = useState({
+    title: "",
+    description: "",
+    location: "",
+    startTime: "09:00",
+    endTime: "10:00",
+    day: 1,
+    color: "bg-blue-500",
+    attendees: "",
+    organizer: "You",
+  })
+  const addEventRef = useRef<HTMLDivElement>(null)
+
+  const eventColors = [
+    { name: "Blue", value: "bg-blue-500" },
+    { name: "Green", value: "bg-green-500" },
+    { name: "Purple", value: "bg-purple-500" },
+    { name: "Yellow", value: "bg-yellow-500" },
+    { name: "Indigo", value: "bg-indigo-500" },
+    { name: "Pink", value: "bg-pink-500" },
+    { name: "Teal", value: "bg-teal-500" },
+    { name: "Cyan", value: "bg-cyan-500" },
+    { name: "Red", value: "bg-red-400" },
+    { name: "Orange", value: "bg-orange-400" },
+  ]
+
   const handleEventClick = (event) => {
     setSelectedEvent(event)
   }
 
+  const handleAddEvent = () => {
+    if (!newEvent.title.trim()) return
+    const event = {
+      ...newEvent,
+      id: events.length + 1,
+      attendees: newEvent.attendees ? newEvent.attendees.split(",").map((a) => a.trim()) : [],
+    }
+    setEvents([...events, event])
+    setNewEvent({
+      title: "",
+      description: "",
+      location: "",
+      startTime: "09:00",
+      endTime: "10:00",
+      day: 1,
+      color: "bg-blue-500",
+      attendees: "",
+      organizer: "You",
+    })
+    setShowAddEvent(false)
+  }
+
+  const resetNewEvent = () => {
+    setNewEvent({
+      title: "",
+      description: "",
+      location: "",
+      startTime: "09:00",
+      endTime: "10:00",
+      day: 1,
+      color: "bg-blue-500",
+      attendees: "",
+      organizer: "You",
+    })
+  }
+
   // Updated sample calendar events with all events before 4 PM
-  const events = [
+  const [events, setEvents] = useState([
     {
       id: 1,
       title: "Team Meeting",
