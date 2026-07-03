@@ -602,14 +602,7 @@ hover:translate-y-[-2px] hover:shadow-lg
 ````
 
 ---
-
-## 🚢 Deployment
-
-### Vercel (Recommended)
-
-1. Push to GitHub
-2. Import repository on [vercel.com](https://vercel.com)
-3. Deploy automatically
+ally
 
 **Environment Variables:**
 
