@@ -456,19 +456,10 @@ export default function Home() {
       ...newEvent,
       id: events.length + 1,
       attendees: newEvent.attendees ? newEvent.attendees.split(",").map((a) => a.trim()) : [],
+      day: new Date(newEvent.date).getDay() + 1,
     }
     setEvents([...events, event])
-    setNewEvent({
-      title: "",
-      description: "",
-      location: "",
-      startTime: "09:00",
-      endTime: "10:00",
-      day: 1,
-      color: "bg-blue-500",
-      attendees: "",
-      organizer: "You",
-    })
+    resetNewEvent()
     setShowAddEvent(false)
   }
 
@@ -479,10 +470,13 @@ export default function Home() {
       location: "",
       startTime: "09:00",
       endTime: "10:00",
-      day: 1,
+      date: new Date().toISOString().split("T")[0],
       color: "bg-blue-500",
       attendees: "",
       organizer: "You",
+      isAllDay: false,
+      repeat: "none",
+      reminder: "10",
     })
   }
   const weekDayLabels = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
