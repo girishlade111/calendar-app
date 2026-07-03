@@ -599,16 +599,7 @@ hover:translate-y-[-2px] hover:shadow-lg
 
 ### Q: How do I change the background image?
 
-````tsdo I add new shadcn/ui components?
-
-**A:** Run the shadcn CLI:
-
-```bash
-pnpm dlx shadcn-ui@latest add button
-pnpm dlx shadcn-ui@latest add card
-````
-
-### Q: Why are TypeScript/ESLint errors ignored in build?
+# Q: Why are TypeScript/ESLint errors ignored in build?
 
 **A:** The `next.config.mjs` has `ignoreDuringBuilds: true` for both. Remove these for stricter builds.
 
