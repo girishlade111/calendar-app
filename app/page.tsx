@@ -561,13 +561,6 @@ export default function Home() {
     return { top: `${top}px`, height: `${height}px` }
   }
 
-  // Sample calendar for mini calendar
-  const daysInMonth = 31
-  const firstDayOffset = 5 // Friday is the first day of the month in this example
-  const miniCalendarDays = Array.from({ length: daysInMonth + firstDayOffset }, (_, i) =>
-    i < firstDayOffset ? null : i - firstDayOffset + 1,
-  )
-
   // Sample my calendars
   const myCalendars = [
     { name: "My Calendar", color: "bg-blue-500" },
