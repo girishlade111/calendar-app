@@ -558,9 +558,14 @@ export default function Home() {
           >
             <Settings className="h-6 w-6 text-white drop-shadow-md" />
           </button>
-          <div className="h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold shadow-md">
-            U
-          </div>
+          <button
+            data-profile-btn
+            onClick={() => setShowProfile(!showProfile)}
+            className={`relative h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-lg transition-all hover:scale-105 ${showProfile ? "ring-2 ring-white/50" : ""}`}
+          >
+            {profile.firstName[0]}{profile.lastName[0]}
+            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 rounded-full border-2 border-black/20" />
+          </button>
         </div>
       </header>
 
