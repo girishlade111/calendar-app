@@ -133,9 +133,69 @@ export default function Home() {
   }, [showAIPopup])
 
   const [currentView, setCurrentView] = useState("week")
-  const [currentMonth, setCurrentMonth] = useState("March 2025")
-  const [currentDate, setCurrentDate] = useState("March 5")
+  const [selectedDate, setSelectedDate] = useState(new Date(2025, 2, 5)) // March 5, 2025
   const [selectedEvent, setSelectedEvent] = useState(null)
+
+  // Date-derived values
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+  const shortMonthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+  const currentMonth = `${monthNames[selectedDate.getMonth()]} ${selectedDate.getFullYear()}`
+  const currentDate = `${monthNames[selectedDate.getMonth()]} ${selectedDate.getDate()}`
+
+  // Get the start of the week (Sunday) for the selected date
+  const getWeekStart = (date: Date) => {
+    const d = new Date(date)
+    d.setDate(d.getDate() - d.getDay())
+    d.setHours(0, 0, 0, 0)
+    return d
+  }
+
+  const currentWeekStart = getWeekStart(selectedDate)
+
+  const weekDates = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(currentWeekStart)
+    d.setDate(d.getDate() + i)
+    return d.getDate()
+  })
+
+  const weekDatesFull = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(currentWeekStart)
+    d.setDate(d.getDate() + i)
+    return d
+  })
+
+  // Mini calendar
+  const miniCalendarYear = selectedDate.getFullYear()
+  const miniCalendarMonth = selectedDate.getMonth()
+  const daysInMonth = new Date(miniCalendarYear, miniCalendarMonth + 1, 0).getDate()
+  const firstDayOffset = new Date(miniCalendarYear, miniCalendarMonth, 1).getDay()
+  const miniCalendarDays = Array.from({ length: daysInMonth + firstDayOffset }, (_, i) =>
+    i < firstDayOffset ? null : i - firstDayOffset + 1,
+  )
+
+  const navigateWeek = (direction: number) => {
+    const newDate = new Date(selectedDate)
+    newDate.setDate(newDate.getDate() + direction * 7)
+    setSelectedDate(newDate)
+  }
+
+  const navigateMonth = (direction: number) => {
+    const newDate = new Date(selectedDate)
+    newDate.setMonth(newDate.getMonth() + direction)
+    setSelectedDate(newDate)
+  }
+
+  const goToToday = () => {
+    setSelectedDate(new Date(2025, 2, 5)) // Reset to March 5, 2025 (the "today" in this demo)
+  }
+
+  const selectMiniCalendarDay = (day: number) => {
+    if (day === null) return
+    const newDate = new Date(selectedDate)
+    newDate.setFullYear(miniCalendarYear, miniCalendarMonth, day)
+    setSelectedDate(newDate)
+  }
 
   // Add Event Modal State
   const [showAddEvent, setShowAddEvent] = useState(false)
