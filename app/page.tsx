@@ -860,7 +860,9 @@ export default function Home() {
                   >
                     <Pause className="h-4 w-4" />
                     <span>Pause Hans Zimmer</span>
-              </button>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         )}
