@@ -813,7 +813,8 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Week View */}
+          {/* Calendar Content - Day/Week/Month Views */}
+          {currentView === "week" && (
           <div className="flex-1 overflow-auto p-4">
             <div className="bg-white/20 backdrop-blur-lg rounded-xl border border-white/20 shadow-xl h-full">
               {/* Week Header */}
@@ -881,6 +882,113 @@ export default function Home() {
               </div>
             </div>
           </div>
+          )}
+
+          {/* Day View */}
+          {currentView === "day" && (
+          <div className="flex-1 overflow-auto p-4">
+            <div className="bg-white/20 backdrop-blur-lg rounded-xl border border-white/20 shadow-xl h-full">
+              <div className="p-4 border-b border-white/20">
+                <div className="text-center">
+                  <div className="text-sm text-white/70 font-medium">{weekDays[selectedDate.getDay()]}</div>
+                  <div className={`text-3xl font-bold text-white mt-1 ${
+                    "bg-blue-500 rounded-full w-12 h-12 flex items-center justify-center mx-auto"
+                  }`}>{selectedDate.getDate()}</div>
+                </div>
+              </div>
+
+              {/* Day Time Grid */}
+              <div className="grid grid-cols-[80px_1fr]">
+                <div className="text-white/70">
+                  {timeSlots.map((time, i) => (
+                    <div key={i} className="h-20 border-b border-white/10 pr-2 text-right text-xs">
+                      {time > 12 ? `${time - 12} PM` : `${time} AM`}
+                    </div>
+                  ))}
+                </div>
+                <div className="border-l border-white/20 relative">
+                  {timeSlots.map((_, timeIndex) => (
+                    <div key={timeIndex} className="h-20 border-b border-white/10"></div>
+                  ))}
+                  {events.map((event, i) => {
+                    const eventStyle = calculateEventStyle(event.startTime, event.endTime)
+                    return (
+                      <div
+                        key={i}
+                        className={`absolute ${event.color} rounded-md p-3 text-white text-sm shadow-md cursor-pointer transition-all duration-200 hover:translate-y-[-2px] hover:shadow-lg`}
+                        style={{ ...eventStyle, left: "8px", right: "8px" }}
+                        onClick={() => handleEventClick(event)}
+                      >
+                        <div className="font-medium">{event.title}</div>
+                        <div className="opacity-80 text-xs mt-1">{`${event.startTime} - ${event.endTime}`}</div>
+                        {event.location && <div className="opacity-70 text-xs mt-1 flex items-center gap-1"><MapPin className="h-3 w-3" />{event.location}</div>}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+          )}
+
+          {/* Month View */}
+          {currentView === "month" && (
+          <div className="flex-1 overflow-auto p-4">
+            <div className="bg-white/20 backdrop-blur-lg rounded-xl border border-white/20 shadow-xl h-full">
+              {/* Month Header - Day Names */}
+              <div className="grid grid-cols-7 border-b border-white/20">
+                {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+                  <div key={day} className="p-2 text-center text-xs text-white/70 font-medium border-r border-white/20 last:border-r-0">
+                    {day}
+                  </div>
+                ))}
+              </div>
+
+              {/* Month Grid */}
+              <div className="grid grid-cols-7">
+                {miniCalendarDays.map((day, i) => {
+                  const isToday = day === selectedDate.getDate() &&
+                    selectedDate.getMonth() === miniCalendarMonth &&
+                    selectedDate.getFullYear() === miniCalendarYear
+                  const dayEvents = day ? events.filter((e) => e.day === day) : []
+                  return (
+                    <div
+                      key={i}
+                      className={`min-h-[80px] p-1 border-r border-b border-white/20 last:border-r-0 ${
+                        !day ? "bg-white/5" : "bg-white/10 hover:bg-white/15 cursor-pointer"
+                      }`}
+                      onClick={() => { if (day) selectMiniCalendarDay(day) }}
+                    >
+                      {day && (
+                        <>
+                          <div className={`text-sm font-medium mb-1 ${
+                            isToday
+                              ? "bg-blue-500 text-white rounded-full w-7 h-7 flex items-center justify-center"
+                              : "text-white"
+                          }`}>
+                            {day}
+                          </div>
+                          {dayEvents.slice(0, 3).map((event, j) => (
+                            <div
+                              key={j}
+                              className={`${event.color} rounded px-1.5 py-0.5 text-[10px] text-white mb-0.5 truncate cursor-pointer`}
+                              onClick={(e) => { e.stopPropagation(); handleEventClick(event) }}
+                            >
+                              {event.title}
+                            </div>
+                          ))}
+                          {dayEvents.length > 3 && (
+                            <div className="text-[10px] text-white/60 pl-1">+{dayEvents.length - 3} more</div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+          )}
         </div>
 
         {/* AI Popup */}
