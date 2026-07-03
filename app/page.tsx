@@ -362,6 +362,14 @@ export default function Home() {
       ) {
         setShowSettings(false)
       }
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(e.target as Node) &&
+        !(e.target as Element)?.closest('[data-profile-btn]')
+      ) {
+        setShowProfile(false)
+        setIsEditingProfile(false)
+      }
     }
     document.addEventListener("mousedown", handleClickOutside)
     return () => document.removeEventListener("mousedown", handleClickOutside)
