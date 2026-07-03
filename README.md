@@ -599,16 +599,7 @@ hover:translate-y-[-2px] hover:shadow-lg
 
 ### Development Workflow
 
-```bash
-# Start development with turbopack (faster)
-pnpm dev
-
-# Build and test production locally
-pnpm build && pnpm start
-
-# Check code quality
-pnpm lint
-```
+````
 
 ---
 
@@ -640,7 +631,7 @@ pnpm build
 
 # Publish directory
 .next
-```
+````
 
 **Docker:**
 
