@@ -133,7 +133,7 @@ export default function Home() {
   }, [showAIPopup])
 
   const [currentView, setCurrentView] = useState("week")
-  const [selectedDate, setSelectedDate] = useState(new Date(2025, 2, 5)) // March 5, 2025
+  const [selectedDate, setSelectedDate] = useState(new Date())
   const [selectedEvent, setSelectedEvent] = useState(null)
 
   // Date-derived values
@@ -187,7 +187,7 @@ export default function Home() {
   }
 
   const goToToday = () => {
-    setSelectedDate(new Date(2025, 2, 5)) // Reset to March 5, 2025 (the "today" in this demo)
+    setSelectedDate(new Date())
   }
 
   const selectMiniCalendarDay = (day: number) => {
