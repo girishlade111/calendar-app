@@ -545,7 +545,7 @@ rtyui
 ### Glassmorphism Classes
 
 ```css
-/* Frosted glass panel */
+/*fghjk/ Frosted glass panel */
 bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl
 
 /* Semi-transparent header */
