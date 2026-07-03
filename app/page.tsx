@@ -568,36 +568,6 @@ export default function Home() {
                   setShowSearchResults(false)
                   searchInputRef.current?.focus()
                 }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            )}
-
-            {/* Search Results Dropdown */}
-            {showSearchResults && searchQuery.trim() && (
-              <div
-                ref={searchResultsRef}
-                className="absolute top-full mt-2 left-0 w-96 bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl shadow-2xl overflow-hidden z-50"
-              >
-                {searchResults.length > 0 ? (
-                  <div className="max-h-80 overflow-y-auto">
-                    <div className="px-4 py-2 border-b border-white/10">
-                      <span className="text-white/60 text-xs font-medium">
-                        {searchResults.length} event{searchResults.length !== 1 ? "s" : ""} found
-                      </span>
-                    </div>
-                    {searchResults.map((event, index) => (
-                      <button
-                        key={event.id}
-                        onClick={() => handleSearchSelect(event)}
-                        onMouseEnter={() => setSelectedSearchIndex(index)}
-                        className={`w-full text-left px-4 py-3 flex items-center gap-3 transition-colors ${
-                          index === selectedSearchIndex
-                            ? "bg-white/20"
-                            : "hover:bg-white/10"
-                        }`}
-                      >
     </div>
   )
 }
