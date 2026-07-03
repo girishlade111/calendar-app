@@ -601,16 +601,6 @@ hover:translate-y-[-2px] hover:shadow-lg
 
 ---
 
-the branch
-
-```bash
-git push origin feature/amazing-feature
-```
-
-5. **Open** a Pull Request
-
-### Code Style
-
 - Use TypeScript for all new files
 - Follow existing component patterns
 - Use `cn()` utility for class merging
