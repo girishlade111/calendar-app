@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, useMemo } from "react"
 import Image from "next/image"
 import {
   ChevronLeft,
@@ -23,6 +23,11 @@ export default function Home() {
   const [showAIPopup, setShowAIPopup] = useState(false)
   const [typedText, setTypedText] = useState("")
   const [isPlaying, setIsPlaying] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [showSearchResults, setShowSearchResults] = useState(false)
+  const [selectedSearchIndex, setSelectedSearchIndex] = useState(-1)
+  const searchInputRef = useRef<HTMLInputElement>(null)
+  const searchResultsRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setIsLoaded(true)
@@ -251,6 +256,64 @@ export default function Home() {
   const weekDates = [3, 4, 5, 6, 7, 8, 9]
   const timeSlots = Array.from({ length: 9 }, (_, i) => i + 8) // 8 AM to 4 PM
 
+  // Search functionality
+  const searchResults = useMemo(() => {
+    if (!searchQuery.trim()) return []
+    const query = searchQuery.toLowerCase()
+    return events.filter(
+      (event) =>
+        event.title.toLowerCase().includes(query) ||
+        event.description.toLowerCase().includes(query) ||
+        event.location.toLowerCase().includes(query) ||
+        event.organizer.toLowerCase().includes(query) ||
+        event.attendees.some((a) => a.toLowerCase().includes(query))
+    )
+  }, [searchQuery, events])
+
+  // Close search results when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        searchResultsRef.current &&
+        !searchResultsRef.current.contains(e.target as Node) &&
+        searchInputRef.current &&
+        !searchInputRef.current.contains(e.target as Node)
+      ) {
+        setShowSearchResults(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Escape") {
+      setShowSearchResults(false)
+      searchInputRef.current?.blur()
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault()
+      setSelectedSearchIndex((prev) =>
+        prev < searchResults.length - 1 ? prev + 1 : 0
+      )
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault()
+      setSelectedSearchIndex((prev) =>
+        prev > 0 ? prev - 1 : searchResults.length - 1
+      )
+    } else if (e.key === "Enter" && selectedSearchIndex >= 0) {
+      e.preventDefault()
+      handleEventClick(searchResults[selectedSearchIndex])
+      setShowSearchResults(false)
+      setSearchQuery("")
+    }
+  }
+
+  const handleSearchSelect = (event: (typeof events)[0]) => {
+    handleEventClick(event)
+    setShowSearchResults(false)
+    setSearchQuery("")
+  }
+
   // Helper function to calculate event position and height
   const calculateEventStyle = (startTime, endTime) => {
     const start = Number.parseInt(startTime.split(":")[0]) + Number.parseInt(startTime.split(":")[1]) / 60
@@ -305,10 +368,80 @@ export default function Home() {
           <div className="relative">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/70" />
             <input
+              ref={searchInputRef}
               type="text"
-              placeholder="Search"
-              className="rounded-full bg-white/10 backdrop-blur-sm pl-10 pr-4 py-2 text-white placeholder:text-white/70 border border-white/20 focus:outline-none focus:ring-2 focus:ring-white/30"
+              placeholder="Search events..."
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value)
+                setShowSearchResults(true)
+                setSelectedSearchIndex(-1)
+              }}
+              onFocus={() => {
+                if (searchQuery.trim()) setShowSearchResults(true)
+              }}
+              onKeyDown={handleSearchKeyDown}
+              className="rounded-full bg-white/10 backdrop-blur-sm pl-10 pr-10 py-2 text-white placeholder:text-white/70 border border-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 w-64"
             />
+            {searchQuery && (
+              <button
+                onClick={() => {
+                  setSearchQuery("")
+                  setShowSearchResults(false)
+                  searchInputRef.current?.focus()
+                }}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
+
+            {/* Search Results Dropdown */}
+            {showSearchResults && searchQuery.trim() && (
+              <div
+                ref={searchResultsRef}
+                className="absolute top-full mt-2 left-0 w-96 bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl shadow-2xl overflow-hidden z-50"
+              >
+                {searchResults.length > 0 ? (
+                  <div className="max-h-80 overflow-y-auto">
+                    <div className="px-4 py-2 border-b border-white/10">
+                      <span className="text-white/60 text-xs font-medium">
+                        {searchResults.length} event{searchResults.length !== 1 ? "s" : ""} found
+                      </span>
+                    </div>
+                    {searchResults.map((event, index) => (
+                      <button
+                        key={event.id}
+                        onClick={() => handleSearchSelect(event)}
+                        onMouseEnter={() => setSelectedSearchIndex(index)}
+                        className={`w-full text-left px-4 py-3 flex items-center gap-3 transition-colors ${
+                          index === selectedSearchIndex
+                            ? "bg-white/20"
+                            : "hover:bg-white/10"
+                        }`}
+                      >
+                        <div className={`w-2 h-2 rounded-full flex-shrink-0 ${event.color}`} />
+                        <div className="flex-1 min-w-0">
+                          <div className="text-white font-medium text-sm truncate">
+                            {event.title}
+                          </div>
+                          <div className="text-white/60 text-xs truncate">
+                            {weekDays[event.day - 1]}, {weekDates[event.day - 1]} {currentMonth} · {event.startTime} - {event.endTime}
+                          </div>
+                        </div>
+                        <MapPin className="h-3 w-3 text-white/40 flex-shrink-0" />
+                      </button>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="px-4 py-6 text-center">
+                    <Search className="h-8 w-8 text-white/30 mx-auto mb-2" />
+                    <p className="text-white/60 text-sm">No events found for "{searchQuery}"</p>
+                    <p className="text-white/40 text-xs mt-1">Try searching by title, location, or attendee</p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           <Settings className="h-6 w-6 text-white drop-shadow-md" />
           <div className="h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold shadow-md">
