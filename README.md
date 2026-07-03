@@ -465,26 +465,28 @@ const nextConfig = {
 
 ### shadcn/ui Config (`components.json`)
 
-```json
-{
-  "style": "default",
-  "rsc": true,
-  "tsx": true,
-  "tailwind": {
-    "config": "tailwind.config.ts",
-    "css": "app/globals.css",
-    "baseColor": "neutral",
-    "cssVariables": true
-  },
-  "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils",
-    "ui": "@/components/ui",
-    "lib": "@/lib",
-    "hooks": "@/hooks"
-  }
+xa
+fffffff
+f
+"style": "default",
+"rsc": true,
+"tsx": true,
+"tailwind": {
+"config": "tailwind.config.ts",
+"css": "app/globals.css",
+"baseColor": "neutral",
+"cssVariables": true
+},
+"aliases": {
+"components": "@/components",
+"utils": "@/lib/utils",
+"ui": "@/components/ui",
+"lib": "@/lib",
+"hooks": "@/hooks"
 }
-```
+}
+
+````
 
 ---
 
@@ -499,7 +501,7 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-```
+````
 
 **Usage:** Merge Tailwind CSS classes with conditional logic.
 
