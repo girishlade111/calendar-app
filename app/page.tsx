@@ -780,6 +780,481 @@ export default function Home() {
         )}
 
         {/* Floating Action Button - Removed */}
+
+        {/* Settings Panel */}
+        {showSettings && (
+          <div
+            ref={settingsRef}
+            className="fixed top-20 right-8 w-[420px] max-h-[80vh] bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl overflow-hidden z-50"
+          >
+            {/* Settings Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <Settings className="h-5 w-5 text-white" />
+                <h2 className="text-lg font-semibold text-white">Settings</h2>
+              </div>
+              <button
+                onClick={() => setShowSettings(false)}
+                className="p-1 rounded-full hover:bg-white/10 text-white/70 hover:text-white transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* Settings Tabs */}
+            <div className="flex border-b border-white/10 px-4">
+              {[
+                { id: "general", label: "General", icon: Globe },
+                { id: "appearance", label: "Appearance", icon: Palette },
+                { id: "calendar", label: "Calendar", icon: Calendar },
+                { id: "notifications", label: "Alerts", icon: Bell },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setSettingsTab(tab.id as any)}
+                  className={`flex items-center gap-1.5 px-3 py-3 text-xs font-medium transition-colors border-b-2 ${
+                    settingsTab === tab.id
+                      ? "border-blue-400 text-white"
+                      : "border-transparent text-white/50 hover:text-white/70"
+                  }`}
+                >
+                  <tab.icon className="h-3.5 w-3.5" />
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Settings Content */}
+            <div className="p-6 overflow-y-auto max-h-[60vh]">
+              {/* General Tab */}
+              {settingsTab === "general" && (
+                <div className="space-y-6">
+                  {/* Time Format */}
+                  <div>
+                    <label className="text-white text-sm font-medium mb-3 block">Time Format</label>
+                    <div className="flex gap-2">
+                      {["12h", "24h"].map((format) => (
+                        <button
+                          key={format}
+                          onClick={() => updateSettings("timeFormat", format)}
+                          className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                            settings.timeFormat === format
+                              ? "bg-blue-500 text-white shadow-lg shadow-blue-500/30"
+                              : "bg-white/5 text-white/60 hover:bg-white/10"
+                          }`}
+                        >
+                          {format === "12h" ? "12 Hour" : "24 Hour"}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Start of Week */}
+                  <div>
+                    <label className="text-white text-sm font-medium mb-3 block">Start of Week</label>
+                    <div className="flex gap-2">
+                      {["sunday", "monday"].map((day) => (
+                        <button
+                          key={day}
+                          onClick={() => updateSettings("startOfWeek", day)}
+                          className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all capitalize ${
+                            settings.startOfWeek === day
+                              ? "bg-blue-500 text-white shadow-lg shadow-blue-500/30"
+                              : "bg-white/5 text-white/60 hover:bg-white/10"
+                          }`}
+                        >
+                          {day}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Default View */}
+                  <div>
+                    <label className="text-white text-sm font-medium mb-3 block">Default View</label>
+                    <div className="flex gap-2">
+                      {["day", "week", "month"].map((view) => (
+                        <button
+                          key={view}
+                          onClick={() => updateSettings("defaultView", view)}
+                          className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all capitalize ${
+                            settings.defaultView === view
+                              ? "bg-blue-500 text-white shadow-lg shadow-blue-500/30"
+                              : "bg-white/5 text-white/60 hover:bg-white/10"
+                          }`}
+                        >
+                          {view}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Timezone */}
+                  <div>
+                    <label className="text-white text-sm font-medium mb-3 block flex items-center gap-2">
+                      <Globe className="h-4 w-4" />
+                      Timezone
+                    </label>
+                    <select
+                      value={settings.timezone}
+                      onChange={(e) => updateSettings("timezone", e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
+                    >
+                      {timezones.map((tz) => (
+                        <option key={tz} value={tz} className="bg-gray-800 text-white">
+                          {tz.replace(/_/g, " ")}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Working Hours */}
+                  <div>
+                    <label className="text-white text-sm font-medium mb-3 block flex items-center gap-2">
+                      <Clock3 className="h-4 w-4" />
+                      Working Hours
+                    </label>
+                    <div className="flex items-center gap-3">
+                      <select
+                        value={settings.workingHoursStart}
+                        onChange={(e) => updateSettings("workingHoursStart", Number(e.target.value))}
+                        className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
+                      >
+                        {Array.from({ length: 24 }, (_, i) => (
+                          <option key={i} value={i} className="bg-gray-800 text-white">
+                            {i === 0 ? "12 AM" : i < 12 ? `${i} AM` : i === 12 ? "12 PM" : `${i - 12} PM`}
+                          </option>
+                        ))}
+                      </select>
+                      <span className="text-white/50 text-sm">to</span>
+                      <select
+                        value={settings.workingHoursEnd}
+                        onChange={(e) => updateSettings("workingHoursEnd", Number(e.target.value))}
+                        className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
+                      >
+                        {Array.from({ length: 24 }, (_, i) => (
+                          <option key={i} value={i} className="bg-gray-800 text-white">
+                            {i === 0 ? "12 AM" : i < 12 ? `${i} AM` : i === 12 ? "12 PM" : `${i - 12} PM`}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Appearance Tab */}
+              {settingsTab === "appearance" && (
+                <div className="space-y-6">
+                  {/* Theme */}
+                  <div>
+                    <label className="text-white text-sm font-medium mb-3 block">Theme</label>
+                    <div className="flex gap-2">
+                      {[
+                        { id: "light", label: "Light", icon: Sun },
+                        { id: "dark", label: "Dark", icon: Moon },
+                        { id: "system", label: "System", icon: Monitor },
+                      ].map((theme) => (
+                        <button
+                          key={theme.id}
+                          onClick={() => updateSettings("theme", theme.id)}
+                          className={`flex-1 flex flex-col items-center gap-2 py-3 rounded-lg text-sm font-medium transition-all ${
+                            settings.theme === theme.id
+                              ? "bg-blue-500 text-white shadow-lg shadow-blue-500/30"
+                              : "bg-white/5 text-white/60 hover:bg-white/10"
+                          }`}
+                        >
+                          <theme.icon className="h-5 w-5" />
+                          {theme.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Event Density */}
+                  <div>
+                    <label className="text-white text-sm font-medium mb-3 block">Event Density</label>
+                    <div className="flex gap-2">
+                      {["compact", "comfortable", "spacious"].map((density) => (
+                        <button
+                          key={density}
+                          onClick={() => updateSettings("eventDensity", density)}
+                          className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all capitalize ${
+                            settings.eventDensity === density
+                              ? "bg-blue-500 text-white shadow-lg shadow-blue-500/30"
+                              : "bg-white/5 text-white/60 hover:bg-white/10"
+                          }`}
+                        >
+                          {density}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Show End Times */}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-white text-sm font-medium">Show End Times</p>
+                      <p className="text-white/50 text-xs mt-0.5">Display end time on events</p>
+                    </div>
+                    <button
+                      onClick={() => updateSettings("showEndTimes", !settings.showEndTimes)}
+                      className={`w-12 h-6 rounded-full transition-colors relative ${
+                        settings.showEndTimes ? "bg-blue-500" : "bg-white/20"
+                      }`}
+                    >
+                      <div
+                        className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-transform ${
+                          settings.showEndTimes ? "translate-x-6" : "translate-x-0.5"
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Show Weekends */}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-white text-sm font-medium">Show Weekends</p>
+                      <p className="text-white/50 text-xs mt-0.5">Include Sat & Sun in week view</p>
+                    </div>
+                    <button
+                      onClick={() => updateSettings("showWeekends", !settings.showWeekends)}
+                      className={`w-12 h-6 rounded-full transition-colors relative ${
+                        settings.showWeekends ? "bg-blue-500" : "bg-white/20"
+                      }`}
+                    >
+                      <div
+                        className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-transform ${
+                          settings.showWeekends ? "translate-x-6" : "translate-x-0.5"
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Show Declined Events */}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-white text-sm font-medium">Show Declined Events</p>
+                      <p className="text-white/50 text-xs mt-0.5">Display events you declined</p>
+                    </div>
+                    <button
+                      onClick={() => updateSettings("showDeclinedEvents", !settings.showDeclinedEvents)}
+                      className={`w-12 h-6 rounded-full transition-colors relative ${
+                        settings.showDeclinedEvents ? "bg-blue-500" : "bg-white/20"
+                      }`}
+                    >
+                      <div
+                        className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-transform ${
+                          settings.showDeclinedEvents ? "translate-x-6" : "translate-x-0.5"
+                        }`}
+                      />
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Calendar Tab */}
+              {settingsTab === "calendar" && (
+                <div className="space-y-6">
+                  {/* AI Assistant */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-purple-500/20 rounded-lg">
+                        <Sparkles className="h-5 w-5 text-purple-400" />
+                      </div>
+                      <div>
+                        <p className="text-white text-sm font-medium">AI Assistant</p>
+                        <p className="text-white/50 text-xs mt-0.5">Smart suggestions & tips</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => updateSettings("aiAssistant", !settings.aiAssistant)}
+                      className={`w-12 h-6 rounded-full transition-colors relative ${
+                        settings.aiAssistant ? "bg-blue-500" : "bg-white/20"
+                      }`}
+                    >
+                      <div
+                        className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-transform ${
+                          settings.aiAssistant ? "translate-x-6" : "translate-x-0.5"
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Sound Effects */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-green-500/20 rounded-lg">
+                        {settings.soundEnabled ? (
+                          <Volume2 className="h-5 w-5 text-green-400" />
+                        ) : (
+                          <VolumeX className="h-5 w-5 text-white/40" />
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-white text-sm font-medium">Sound Effects</p>
+                        <p className="text-white/50 text-xs mt-0.5">Play sounds for notifications</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => updateSettings("soundEnabled", !settings.soundEnabled)}
+                      className={`w-12 h-6 rounded-full transition-colors relative ${
+                        settings.soundEnabled ? "bg-blue-500" : "bg-white/20"
+                      }`}
+                    >
+                      <div
+                        className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-transform ${
+                          settings.soundEnabled ? "translate-x-6" : "translate-x-0.5"
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Quick Actions */}
+                  <div>
+                    <label className="text-white text-sm font-medium mb-3 block">Quick Actions</label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button className="flex items-center gap-2 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-lg text-white/70 hover:text-white text-sm transition-colors">
+                        <Calendar className="h-4 w-4" />
+                        Export Calendar
+                      </button>
+                      <button className="flex items-center gap-2 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-lg text-white/70 hover:text-white text-sm transition-colors">
+                        <Globe className="h-4 w-4" />
+                        Import Events
+                      </button>
+                      <button className="flex items-center gap-2 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-lg text-white/70 hover:text-white text-sm transition-colors">
+                        <Palette className="h-4 w-4" />
+                        Customize Colors
+                      </button>
+                      <button className="flex items-center gap-2 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-lg text-white/70 hover:text-white text-sm transition-colors">
+                        <Clock3 className="h-4 w-4" />
+                        Set Reminders
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Notifications Tab */}
+              {settingsTab === "notifications" && (
+                <div className="space-y-6">
+                  {/* Notifications */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-yellow-500/20 rounded-lg">
+                        <Bell className="h-5 w-5 text-yellow-400" />
+                      </div>
+                      <div>
+                        <p className="text-white text-sm font-medium">Push Notifications</p>
+                        <p className="text-white/50 text-xs mt-0.5">Get notified about events</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => updateSettings("notifications", !settings.notifications)}
+                      className={`w-12 h-6 rounded-full transition-colors relative ${
+                        settings.notifications ? "bg-blue-500" : "bg-white/20"
+                      }`}
+                    >
+                      <div
+                        className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-transform ${
+                          settings.notifications ? "translate-x-6" : "translate-x-0.5"
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Notification Settings */}
+                  {settings.notifications && (
+                    <div className="space-y-3 pl-14">
+                      {[
+                        { label: "Event reminders", desc: "15 minutes before", enabled: true },
+                        { label: "Daily agenda", desc: "8:00 AM daily", enabled: true },
+                        { label: "Event changes", desc: "When events are updated", enabled: false },
+                        { label: "Invitations", desc: "New meeting invites", enabled: true },
+                      ].map((item, i) => (
+                        <div key={i} className="flex items-center justify-between py-2">
+                          <div>
+                            <p className="text-white text-sm">{item.label}</p>
+                            <p className="text-white/40 text-xs">{item.desc}</p>
+                          </div>
+                          <button
+                            className={`w-10 h-5 rounded-full transition-colors relative ${
+                              item.enabled ? "bg-blue-500" : "bg-white/20"
+                            }`}
+                          >
+                            <div
+                              className={`w-4 h-4 bg-white rounded-full absolute top-0.5 transition-transform ${
+                                item.enabled ? "translate-x-5" : "translate-x-0.5"
+                              }`}
+                            />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Quiet Hours */}
+                  <div>
+                    <label className="text-white text-sm font-medium mb-3 block flex items-center gap-2">
+                      <Moon className="h-4 w-4" />
+                      Quiet Hours
+                    </label>
+                    <div className="flex items-center gap-3">
+                      <select className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer">
+                        {[20, 21, 22, 23].map((h) => (
+                          <option key={h} value={h} className="bg-gray-800 text-white">
+                            {h > 12 ? `${h - 12} PM` : h === 12 ? "12 PM" : `${h} PM`}
+                          </option>
+                        ))}
+                      </select>
+                      <span className="text-white/50 text-sm">to</span>
+                      <select className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer">
+                        {[6, 7, 8, 9].map((h) => (
+                          <option key={h} value={h} className="bg-gray-800 text-white">
+                            {h === 0 ? "12 AM" : h < 12 ? `${h} AM` : "12 PM"}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Settings Footer */}
+            <div className="px-6 py-4 border-t border-white/10 flex items-center justify-between">
+              <button
+                onClick={() => {
+                  setSettings({
+                    timeFormat: "12h",
+                    startOfWeek: "sunday",
+                    showWeekends: true,
+                    showEndTimes: true,
+                    eventDensity: "comfortable",
+                    aiAssistant: true,
+                    soundEnabled: true,
+                    notifications: true,
+                    workingHoursStart: 8,
+                    workingHoursEnd: 17,
+                    timezone: "America/New_York",
+                    theme: "dark",
+                    showDeclinedEvents: false,
+                    defaultView: "week",
+                  })
+                }}
+                className="text-white/50 hover:text-white text-sm transition-colors"
+              >
+                Reset to default
+              </button>
+              <button
+                onClick={() => setShowSettings(false)}
+                className="px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-colors"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   )
