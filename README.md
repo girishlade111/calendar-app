@@ -599,18 +599,14 @@ hover:translate-y-[-2px] hover:shadow-lg
 
 ### Development Workflow
 
-````
-
-**s
-
-**Netlify:**
-
-```bash
 # Build command
+
 pnpm build
 
 # Publish directory
+
 .next
+
 ````
 
 **Docker:**
@@ -758,3 +754,4 @@ SOFTWARE.
 [⬆ Back to Top](#-calendar-app)
 
 </div>
+````
