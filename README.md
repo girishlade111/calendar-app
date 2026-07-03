@@ -590,12 +590,12 @@ hover:translate-y-[-2px] hover:shadow-lg
 
 ## 📜 Scripts
 
-| Command | Description | Usage |
-| --------------------- | ----------------------------------------- | yhgtrfedwsqa----------- |
-| `pnpm dev` | Start Next.jtrefdwsqas development server | Development |
-| `pnpm build` | CreatuhygtrfexswaZ production build | Production |
-| `pnpm staTGRFVXSAZrt` | Start production server | Production |
-| `pnpm lint` | Run ESLint checks | Quality |
+| Command               | Description                               | Usage       |
+| --------------------- | ----------------------------------------- | ----------- |
+| `pnpm dev`            | Start Next.jtrefdwsqas development server | Development |
+| `pnpm build`          | CreatuhygtrfexswaZ production build       | Production  |
+| `pnpm staTGRFVXSAZrt` | Start production server                   | Production  |
+| `pnpm lint`           | Run ESLint checks                         | Quality     |
 
 ### Development Workflow
 
