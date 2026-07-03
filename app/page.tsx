@@ -823,7 +823,13 @@ export default function Home() {
                   <div key={i} className="p-2 text-center border-l border-white/20">
                     <div className="text-xs text-white/70 font-medium">{day}</div>
                     <div
-                      className={`text-lg font-medium mt-1 text-white ${weekDates[i] === 5 ? "bg-blue-500 rounded-full w-8 h-8 flex items-center justify-center mx-auto" : ""}`}
+                      className={`text-lg font-medium mt-1 text-white ${
+                        weekDatesFull[i].getDate() === selectedDate.getDate() &&
+                        weekDatesFull[i].getMonth() === selectedDate.getMonth() &&
+                        weekDatesFull[i].getFullYear() === selectedDate.getFullYear()
+                          ? "bg-blue-500 rounded-full w-8 h-8 flex items-center justify-center mx-auto"
+                          : ""
+                      }`}
                     >
                       {weekDates[i]}
                     </div>
