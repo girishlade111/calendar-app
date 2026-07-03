@@ -779,12 +779,12 @@ export default function Home() {
           {/* Calendar Controls */}
           <div className="flex items-center justify-between p-4 border-b border-white/20">
             <div className="flex items-center gap-4">
-              <button className="px-4 py-2 text-white bg-blue-500 rounded-md">Today</button>
+              <button onClick={goToToday} className="px-4 py-2 text-white bg-blue-500 rounded-md">Today</button>
               <div className="flex">
-                <button className="p-2 text-white hover:bg-white/10 rounded-l-md">
+                <button onClick={() => navigateWeek(-1)} className="p-2 text-white hover:bg-white/10 rounded-l-md">
                   <ChevronLeft className="h-5 w-5" />
                 </button>
-                <button className="p-2 text-white hover:bg-white/10 rounded-r-md">
+                <button onClick={() => navigateWeek(1)} className="p-2 text-white hover:bg-white/10 rounded-r-md">
                   <ChevronRight className="h-5 w-5" />
                 </button>
               </div>
