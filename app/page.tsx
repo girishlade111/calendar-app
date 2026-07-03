@@ -165,46 +165,6 @@ export default function Home() {
     { name: "Orange", value: "bg-orange-400" },
   ]
 
-  const handleEventClick = (event) => {
-    setSelectedEvent(event)
-  }
-
-  const handleAddEvent = () => {
-    if (!newEvent.title.trim()) return
-    const event = {
-      ...newEvent,
-      id: events.length + 1,
-      attendees: newEvent.attendees ? newEvent.attendees.split(",").map((a) => a.trim()) : [],
-    }
-    setEvents([...events, event])
-    setNewEvent({
-      title: "",
-      description: "",
-      location: "",
-      startTime: "09:00",
-      endTime: "10:00",
-      day: 1,
-      color: "bg-blue-500",
-      attendees: "",
-      organizer: "You",
-    })
-    setShowAddEvent(false)
-  }
-
-  const resetNewEvent = () => {
-    setNewEvent({
-      title: "",
-      description: "",
-      location: "",
-      startTime: "09:00",
-      endTime: "10:00",
-      day: 1,
-      color: "bg-blue-500",
-      attendees: "",
-      organizer: "You",
-    })
-  }
-
   // Updated sample calendar events with all events before 4 PM
   const [events, setEvents] = useState([
     {
@@ -307,7 +267,7 @@ export default function Home() {
       id: 9,
       title: "Morning Standup",
       startTime: "08:30",
-      endTime: "09:30", // Changed from "09:00" to "09:30"
+      endTime: "09:30",
       color: "bg-blue-400",
       day: 2,
       description: "Daily team standup",
@@ -389,7 +349,45 @@ export default function Home() {
     },
   ])
 
-  // Sample calendar days for the week view
+  const handleEventClick = (event) => {
+    setSelectedEvent(event)
+  }
+
+  const handleAddEvent = () => {
+    if (!newEvent.title.trim()) return
+    const event = {
+      ...newEvent,
+      id: events.length + 1,
+      attendees: newEvent.attendees ? newEvent.attendees.split(",").map((a) => a.trim()) : [],
+    }
+    setEvents([...events, event])
+    setNewEvent({
+      title: "",
+      description: "",
+      location: "",
+      startTime: "09:00",
+      endTime: "10:00",
+      day: 1,
+      color: "bg-blue-500",
+      attendees: "",
+      organizer: "You",
+    })
+    setShowAddEvent(false)
+  }
+
+  const resetNewEvent = () => {
+    setNewEvent({
+      title: "",
+      description: "",
+      location: "",
+      startTime: "09:00",
+      endTime: "10:00",
+      day: 1,
+      color: "bg-blue-500",
+      attendees: "",
+      organizer: "You",
+    })
+  }
   const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
   const weekDates = [3, 4, 5, 6, 7, 8, 9]
   const timeSlots = Array.from({ length: 9 }, (_, i) => i + 8) // 8 AM to 4 PM
