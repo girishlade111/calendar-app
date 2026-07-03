@@ -597,16 +597,7 @@ hover:translate-y-[-2px] hover:shadow-lg
 | `pnpm staTGRFVXSAZrt`   | Start production server                             | Production 5tw4recxz |
 | `pnpmWSE3R4TYUJ lint`   | Runw2e3t546 ESLint checks                           | Quality 2w345gt      |
 
-### Develop
-
-````
-
-**Docker:*stall --frozen-lockfile
-COPY . .
-RUN pnpm build
-EXPOSE 3000
-CMD ["pnpm", "start"]
-```
+###
 
 ---
 
