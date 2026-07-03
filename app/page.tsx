@@ -731,14 +731,18 @@ export default function Home() {
                 ))}
 
                 {miniCalendarDays.map((day, i) => (
-                  <div
+                  <button
                     key={i}
+                    onClick={() => selectMiniCalendarDay(day)}
+                    disabled={day === null}
                     className={`text-xs rounded-full w-7 h-7 flex items-center justify-center ${
-                      day === 5 ? "bg-blue-500 text-white" : "text-white hover:bg-white/20"
+                      day === selectedDate.getDate() && selectedDate.getMonth() === miniCalendarMonth && selectedDate.getFullYear() === miniCalendarYear
+                        ? "bg-blue-500 text-white"
+                        : "text-white hover:bg-white/20"
                     } ${!day ? "invisible" : ""}`}
                   >
                     {day}
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>
