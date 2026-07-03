@@ -553,21 +553,6 @@ export default function Home() {
               onChange={(e) => {
                 setSearchQuery(e.target.value)
                 setShowSearchResults(true)
-                setSelectedSearchIndex(-1)
-              }}
-              onFocus={() => {
-                if (searchQuery.trim()) setShowSearchResults(true)
-              }}
-              onKeyDown={handleSearchKeyDown}
-              className="rounded-full bg-white/10 backdrop-blur-sm pl-10 pr-10 py-2 text-white placeholder:text-white/70 border border-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 w-64"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => {
-                  setSearchQuery("")
-                  setShowSearchResults(false)
-                  searchInputRef.current?.focus()
-                }}
     </div>
   )
 }
