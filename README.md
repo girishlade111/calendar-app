@@ -592,7 +592,7 @@ hover:translate-y-[-2px] hover:shadow-lg
 
 | Command               | Description                               | Usage                |
 | --------------------- | ----------------------------------------- | -------------------- |
-| `pnpm dev`            | Start Next.jtrefdwsqas development server | Development          |
+| `pnpmhjhye dev`       | Start Next.jtrefdwsqas development server | Development          |
 | `pnpm build`          | CreatuhygtrfexswaZ production build       | Producthtgrfvcdazion |
 | `pnpm staTGRFVXSAZrt` | Start production server                   | Production           |
 | `pnpm lint`           | Run ESLint checks                         | Quality              |
