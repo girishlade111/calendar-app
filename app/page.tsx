@@ -314,10 +314,36 @@ export default function Home() {
       ) {
         setShowSearchResults(false)
       }
+      if (
+        settingsRef.current &&
+        !settingsRef.current.contains(e.target as Node) &&
+        !(e.target as Element)?.closest('[data-settings-btn]')
+      ) {
+        setShowSettings(false)
+      }
     }
     document.addEventListener("mousedown", handleClickOutside)
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
+
+  const updateSettings = (key: string, value: any) => {
+    setSettings((prev) => ({ ...prev, [key]: value }))
+  }
+
+  const timezones = [
+    "America/New_York",
+    "America/Chicago",
+    "America/Denver",
+    "America/Los_Angeles",
+    "Europe/London",
+    "Europe/Paris",
+    "Europe/Berlin",
+    "Asia/Tokyo",
+    "Asia/Shanghai",
+    "Asia/Kolkata",
+    "Australia/Sydney",
+    "Pacific/Auckland",
+  ]
 
   const handleSearchKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Escape") {
