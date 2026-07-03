@@ -520,6 +520,7 @@ export function ThemeProvider({ children, ...props }) {
 
 ### CSS Variables
 
+rtyui
 **Light Mode:**
 | Variable | Value |
 |----------|-------|
