@@ -649,7 +649,11 @@ export default function Home() {
           style={{ animationDelay: "0.4s" }}
         >
           <div>
-            <button className="mb-6 flex items-center justify-center gap-2 rounded-full bg-blue-500 px-4 py-3 text-white w-full">
+            <button
+              data-add-event-btn
+              onClick={() => setShowAddEvent(!showAddEvent)}
+              className="mb-6 flex items-center justify-center gap-2 rounded-full bg-blue-500 px-4 py-3 text-white w-full hover:bg-blue-600 transition-colors"
+            >
               <Plus className="h-5 w-5" />
               <span>Create</span>
             </button>
