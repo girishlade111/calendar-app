@@ -28,6 +28,18 @@ import {
   Volume2,
   VolumeX,
   Check,
+  User,
+  Mail,
+  Phone,
+  Shield,
+  Key,
+  LogOut,
+  Camera,
+  Edit3,
+  Save,
+  CreditCard,
+  HelpCircle,
+  MessageSquare,
 } from "lucide-react"
 
 export default function Home() {
