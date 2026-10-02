@@ -1164,3 +1164,7 @@ SOFTWARE.
 If you found this project helpful, please give it a ⭐ on GitHub!
 
 </div>
+
+---
+
+Built by Girish Lade — [ladestack.in](https://ladestack.in)
